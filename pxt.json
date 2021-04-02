@@ -1,0 +1,23 @@
+{
+    "name": "pxt-thermocycler-module",
+    "description": "",
+    "dependencies": {
+        "adafruit-metro-m4-express": "*"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "target": "0.15.1",
+        "targetId": "maker"
+    },
+    "supportedTargets": [
+        "maker"
+    ],
+    "preferredEditor": "blocksprj"
+}
