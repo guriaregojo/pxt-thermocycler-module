@@ -154,6 +154,9 @@ namespace PCR { //mi icono de PCR en el desplegable
     cmd1(0xAF)       // SSD1306_DISPLAYON
     clear()
  }
+ 
+ init();
+}
  //////// HASTA AQUI HE CREADO TODAS LAS FUNCIONES QUE VOY A USAR EN MI OLED
 
  //block scope es todo lo que va entre {} por ejemplo un if,for y while{} son en si mismos un block scope
@@ -173,9 +176,6 @@ export function Start_PCR(): void {
 var changeblock: number=0;
 var tempCelsius: number=0;
 var fullcycle: number=8;
-    init(); //inicializo pantalla
-    pause(1000); //give time for OLED to initialize
-    clear();
 
     //////TEXT START PCR
     String(" START PCR",40,50,1); //meter un espacio antes de la "S"
