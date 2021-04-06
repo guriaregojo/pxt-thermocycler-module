@@ -156,7 +156,7 @@ namespace PCR { //mi icono de PCR en el desplegable
  }
  
  init();
-}
+
  //////// HASTA AQUI HE CREADO TODAS LAS FUNCIONES QUE VOY A USAR EN MI OLED
 
  //block scope es todo lo que va entre {} por ejemplo un if,for y while{} son en si mismos un block scope
@@ -234,4 +234,5 @@ var fullcycle: number=8;
             pause(1000); //give time for OLED to initialize
             clear(); //borro todo por si acaso
             fullcycle++;
+}
 }
