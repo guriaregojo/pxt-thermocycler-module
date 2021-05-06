@@ -293,7 +293,7 @@ namespace PCR { //mi icono de PCR en el desplegable
     //% block="Denaturation at %value during %time" blockGap=8
     //% weight=90 color=#AA278D
     export function denaturation(value: denature, time: pcr_times): void {
-        vat dat = new Date();
+        var dat = new Date();
         var thetime: number = 0;
         var totalmillis: number = 0;
         var start: number = 0;
@@ -424,7 +424,7 @@ namespace PCR { //mi icono de PCR en el desplegable
     //% block="Annealing at %value during %time" blockGap=8
     //% weight=80 color=#AA278D
     export function annealing(value: anneal, time: pcr_times): void {
-        vat dat = new Date();
+        var dat = new Date();
         var thetime: number = 0;
         var totalmillis: number = 0;
         var start: number = 0;
@@ -623,7 +623,7 @@ namespace PCR { //mi icono de PCR en el desplegable
     //% block="Elongation at %value during %time" blockGap=8
     //% weight=70 color=#AA278D
     export function elongation(value: elongate, time: pcr_times): void {
-        vat dat = new Date();
+        var dat = new Date();
         var thetime: number = 0;
         var totalmillis: number = 0;
         var start: number = 0;
