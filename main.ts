@@ -5,11 +5,12 @@
  * generated for an **exported** function.
  */
 
-//A0 heat 
-//A1 thermistor
-//A11 canal con 2 ventis
-//A13 y A14 canales con 1 venti cada 
+ //A1 conectothermistor -> programo A1
 
+//A0 conecto heat -> programo A0
+//A14 conecto canal con 2 ventis -> programo A2
+//A13 conecto 1 venti  -> programo A3
+//A11 conecto 1 venti  -> programo A4
 
 enum pcr_times {
 
@@ -281,9 +282,9 @@ var tempFarenheit = (tempCelsius * 1.8) + 32;
             }
         else{
             pins.A0.digitalWrite(true)
-            pins.A11.digitalWrite(true)
-            pins.A13.digitalWrite(true)
-            pins.A14.digitalWrite(true)
+            pins.A2.digitalWrite(true)
+            pins.A3.digitalWrite(true)
+            pins.A4.digitalWrite(true)
             }
         if(tempCelsius>=90){
             changeblock=1;
@@ -380,8 +381,8 @@ var tempFarenheit = (tempCelsius * 1.8) + 32;
                       }
                    }
                else if (tempCelsius>=94.5){
-                       pins.A13.digitalWrite(false);
-                       pins.A14.digitalWrite(false);
+                       pins.A3.digitalWrite(false);
+                       pins.A4.digitalWrite(false);
                        if (tempCelsius>=96){
                         pause(3000);
                         }
@@ -394,9 +395,9 @@ var tempFarenheit = (tempCelsius * 1.8) + 32;
                    }
                else{} 
                pins.A0.digitalWrite(true)
-               pins.A11.digitalWrite(true)
-               pins.A13.digitalWrite(true)
-               pins.A14.digitalWrite(true)
+               pins.A2.digitalWrite(true)
+               pins.A3.digitalWrite(true)
+               pins.A4.digitalWrite(true)
                }//cierro if count<<thetime
                else{
                    changeblock=2; //salgo del while
@@ -487,9 +488,10 @@ var tempFarenheit = (tempCelsius * 1.8) + 32;
   clear();
 ///////////////////////////////////////////////////*/
 
-        pins.A11.digitalWrite(true)
-        pins.A13.digitalWrite(true)
-        pins.A14.digitalWrite(true)
+pins.A0.digitalWrite(true)
+pins.A2.digitalWrite(true)
+pins.A3.digitalWrite(true)
+pins.A4.digitalWrite(true)
     if(tempCelsius<=69){
         changeblock=3;
         totalmillis=0;
@@ -564,8 +566,8 @@ var tempFarenheit = (tempCelsius * 1.8) + 32;
                     }
                 }
                 else if (tempCelsius>=69){
-                    pins.A13.digitalWrite(false);
-                    pins.A14.digitalWrite(false);
+                    pins.A3.digitalWrite(false);
+                    pins.A4.digitalWrite(false);
                     if (tempCelsius>=70){
                     pause(1500);
                     }
@@ -575,9 +577,9 @@ var tempFarenheit = (tempCelsius * 1.8) + 32;
                 } 
                 else{
                     pins.A0.digitalWrite(true)
-                    pins.A11.digitalWrite(true)
-                    pins.A13.digitalWrite(true)
-                    pins.A14.digitalWrite(true)
+                    pins.A2.digitalWrite(true)
+                    pins.A3.digitalWrite(true)
+                    pins.A4.digitalWrite(true)
                 }
             }//cierro if count
             else{
@@ -745,8 +747,8 @@ var tempFarenheit = (tempCelsius * 1.8) + 32;
                     }
                 }
                 else if (tempCelsius>=70){
-                    pins.A13.digitalWrite(false);
-                    pins.A14.digitalWrite(false);
+                    pins.A3.digitalWrite(false);
+                    pins.A4.digitalWrite(false);
                     if (tempCelsius>=74){
                     pause(1500);
                     }
@@ -756,9 +758,9 @@ var tempFarenheit = (tempCelsius * 1.8) + 32;
                 } 
                 else{}
                 pins.A0.digitalWrite(true)
-                pins.A11.digitalWrite(true)
-                pins.A13.digitalWrite(true)
-                pins.A14.digitalWrite(true)
+                pins.A2.digitalWrite(true)
+                pins.A3.digitalWrite(true)
+                pins.A4.digitalWrite(true)
                 
                   }//cierro if count
             else{
