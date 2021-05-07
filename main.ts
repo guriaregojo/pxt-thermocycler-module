@@ -211,7 +211,7 @@ namespace PCR { //mi icono de PCR en el desplegable
 //let (updated) y const (no updated): block scoped
  // voy a declarar las variables con VAR en cada bloque
 
- var fullcycle: number=0;
+ let fullcycle: number=0;
 
 
 //% block="Start the PCR" blockGap=8
