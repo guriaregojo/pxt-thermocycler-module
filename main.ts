@@ -160,24 +160,23 @@ namespace PCR { //mi icono de PCR en el desplegable
  // voy a declarar las variables con VAR en cada bloque
 
 
- let fullcycle: number=0;
+ //let fullcycle: number=0;
  
  
-//% block="hello" blockGap=8
+//% block="heyyyy" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
-//var start : number=0;
+var start : number=0;
  var themillis: number=0;
  var totalmillis: number=0;
 
 
     //////TEXT START PCR
-//start=control.millis();
+start=control.millis();
 pause(1000); //give time for OLED to initialize
  String(" START PCR",40,50,1); //meter un espacio antes de la "S"
- //Number(start,20,60,1);
-    clear(); //borro todo por si acaso
-
+ Number(start,20,60,1);
+    //clear(); //borro todo por si acaso
 
                 pins.A2.digitalWrite(false);
                 pins.A3.digitalWrite(false);
@@ -187,10 +186,11 @@ pause(1000); //give time for OLED to initialize
                 pins.A2.digitalWrite(true);
                 pins.A3.digitalWrite(true);
                 pins.A4.digitalWrite(true);
-    //themillis=control.millis()-start;
-    //totalmillis=themillis+totalmillis;
-  //Number(totalmillis,20,60,1);
- clear();
+ pause(2000);
+    themillis=control.millis()-start;
+    totalmillis=themillis+totalmillis;
+  Number(totalmillis,20,60,1);
+ //clear();
 
 
    } //close prueba block
