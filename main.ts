@@ -161,14 +161,14 @@ namespace PCR { //mi icono de PCR en el desplegable
 
 
  //let fullcycle: number=0;
- 
+ let start : number=0;
+let themillis: number=0;
+ let totalmillis: number=0;
  
 //% block="heyyyy" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
-var start : number=0;
- var themillis: number=0;
- var totalmillis: number=0;
+
 
 
     //////TEXT START PCR
@@ -189,6 +189,7 @@ pause(1000); //give time for OLED to initialize
  pause(2000);
     themillis=control.millis()-start;
     totalmillis=themillis+totalmillis;
+  String(" Hey",40,50,1); //meter un espacio antes de la "S"
   Number(totalmillis,20,60,1);
  //clear();
 
