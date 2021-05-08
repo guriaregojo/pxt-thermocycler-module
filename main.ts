@@ -176,7 +176,7 @@ start=control.millis();
 pause(1000); //give time for OLED to initialize
  String(" START PCR",40,50,1); //meter un espacio antes de la "S"
  Number(start,20,60,1);
-    //clear(); //borro todo por si acaso
+    clear(); //borro todo por si acaso
 
                 pins.A2.digitalWrite(false);
                 pins.A3.digitalWrite(false);
@@ -191,7 +191,7 @@ pause(1000); //give time for OLED to initialize
     totalmillis=themillis+totalmillis;
   String(" Hey",40,50,1); //meter un espacio antes de la "S"
   Number(totalmillis,20,60,1);
- //clear();
+ clear();
 
 
    } //close prueba block
