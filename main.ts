@@ -175,7 +175,7 @@ export function hello(): void {
 start=control.millis();
 //pause(1000); //give time for OLED to initialize
  String(" START PCR",40,50,1); //meter un espacio antes de la "S"
- 
+ clear();
  //borro todo por si acaso
 
                 pins.A2.digitalWrite(false);
@@ -190,15 +190,12 @@ start=control.millis();
  themillis=control.millis()-start;
  Number(themillis,20,60,1);
  pause(1000)
-     clear();
-   pause(1000)
+
     totalmillis=themillis+totalmillis;
   String(" Hey",40,50,1); //meter un espacio antes de la "S"
   Number(totalmillis,20,60,1);
-   pause(1000)
- clear();
- pause(1000)
 
+ 
 
    } //close prueba block
  
