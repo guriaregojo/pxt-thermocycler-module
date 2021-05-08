@@ -163,42 +163,37 @@ namespace PCR { //mi icono de PCR en el desplegable
  let fullcycle: number=0;
  
  
-//% block="prueba" blockGap=8
+//% block="hello" blockGap=8
 //% weight=100 color=#FFA533
-export function prueba(): void {
+export function hello(): void {
 var start : number=0;
  var themillis: number=0;
  var totalmillis: number=0;
 
 
     //////TEXT START PCR
- while(totalmillis<6*1000){
-      start=control.millis();
-    String(" START PCR",40,50,1); //meter un espacio antes de la "S"
-    String("Heating to denature",20,20,1);
-    pause(1000); //give time for OLED to initialize
+start=control.millis();
+pause(1000); //give time for OLED to initialize
+ String(" START PCR",40,50,1); //meter un espacio antes de la "S"
+ Number(start,20,60,1);
     clear(); //borro todo por si acaso
 
-                pins.A0.digitalWrite(true);
+
                 pins.A2.digitalWrite(false);
                 pins.A3.digitalWrite(false);
                 pins.A4.digitalWrite(false);
      pause(2000);
-                pins.A0.digitalWrite(false);
-                pins.A2.digitalWrite(false);
-                pins.A3.digitalWrite(false);
-                pins.A4.digitalWrite(false);
+
+                pins.A2.digitalWrite(true);
+                pins.A3.digitalWrite(true);
+                pins.A4.digitalWrite(true);
     themillis=control.millis()-start;
     totalmillis=themillis+totalmillis;
- } //close while
+  Number(totalmillis,20,60,1);
+ clear();
 
-    String(" END PCR",40,50,1); //meter un espacio antes de la "S"
-    String(" No Heating ",20,20,1);
-    pause(1000); //give time for OLED to initialize
-    clear(); //borro todo por si acaso
 
    } //close prueba block
- 
  
 
 } //close namespace 
