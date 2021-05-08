@@ -224,11 +224,13 @@ var start : number=0;
 
 
     //////TEXT START PCR
+ while(totalmillis<6*1000){
+      start=control.millis();
     String(" START PCR",40,50,1); //meter un espacio antes de la "S"
     String("Heating to denature",20,20,1);
     pause(1000); //give time for OLED to initialize
     clear(); //borro todo por si acaso
-    start=control.millis();
+
                 pins.A0.digitalWrite(true);
                 pins.A2.digitalWrite(false);
                 pins.A3.digitalWrite(false);
@@ -240,7 +242,12 @@ var start : number=0;
                 pins.A4.digitalWrite(false);
     themillis=control.millis()-start;
     totalmillis=themillis+totalmillis;
-    
+ } //close while
+
+    String(" END PCR",40,50,1); //meter un espacio antes de la "S"
+    String(" No Heating ",20,20,1);
+    pause(1000); //give time for OLED to initialize
+    clear(); //borro todo por si acaso
 
    } //close prueba block
  
