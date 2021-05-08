@@ -165,7 +165,7 @@ namespace PCR { //mi icono de PCR en el desplegable
 let themillis: number=0;
  let totalmillis: number=0;
  
-//% block="vale guay" blockGap=8
+//% block="valey" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
 
@@ -175,14 +175,13 @@ export function hello(): void {
 start=control.millis();
 //pause(1000); //give time for OLED to initialize
  String(" START PCR",40,50,1); //meter un espacio antes de la "S"
- clear();
+
  //borro todo por si acaso
 
                 pins.A2.digitalWrite(false);
                 pins.A3.digitalWrite(false);
                 pins.A4.digitalWrite(false);
      pause(2000);
-
                 pins.A2.digitalWrite(true);
                 pins.A3.digitalWrite(true);
                 pins.A4.digitalWrite(true);
