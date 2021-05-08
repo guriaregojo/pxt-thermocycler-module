@@ -164,7 +164,16 @@ namespace PCR { //mi icono de PCR en el desplegable
  let start : number=0;
 let themillis: number=0;
  let totalmillis: number=0;
- 
+  ////THERMISTOR READING RESISTANCE////////
+let SERIESRESISTOR: number=1000 /// the value of the extra resistor (measure exact with multi)
+let THERMISTRESISTOR:number=1000;
+let average: number=0
+let i: number=0;
+let sum: number=0;
+let B_param_equation:  number=0;
+let tempCelsius: number=0;
+let tempFarenheit: number=0;
+
 //% block="valey" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
@@ -194,6 +203,31 @@ start=control.millis();
   String(" Hey",40,50,1); //meter un espacio antes de la "S"
   Number(totalmillis,20,60,1);
 
+
+for (i=0; i< 5; i++){  //coger 5 samples
+sum=sum+pins.A1.analogRead();
+pause(10);
+}
+average=sum/5;
+
+ // convert the value to resistance
+ average = 1023 / average - 1;
+ average = SERIESRESISTOR / average;
+
+////THERMISTOR CALCULATING TEMPERATURE
+B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
+B_param_equation = 1.0 / B_param_equation;  // Inverse
+B_param_equation = B_param_equation -273.15;  //from kelving to celcius
+tempCelsius=B_param_equation;
+tempFarenheit = (tempCelsius * 1.8) + 32;
+///////////////////////////////////////////////////*/
+ //DISPLAY TEMPERATURE ON SCREEN:
+  String(" Temperature: ",20,50,1); //meter un espacio antes de la "S"
+  Number(tempCelsius,20,60,1);
+  String(" Celsius: ",50,60,1); //meter un espacio antes de la "S"
+  Number(tempFarenheit,15,150,1);
+  String(" F*: ",55,200,1); //meter un espacio antes de la "S"
+  pause(1000)
  
 
    } //close prueba block
