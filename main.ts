@@ -165,7 +165,7 @@ namespace PCR { //mi icono de PCR en el desplegable
 let themillis: number=0;
  let totalmillis: number=0;
  
-//% block="headfsf" blockGap=8
+//% block="vale guay" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
 
