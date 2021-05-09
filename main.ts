@@ -174,7 +174,7 @@ let B_param_equation:  number=0;
 let tempCelsius: number=0;
 let tempFarenheit: number=0;
 
-//% block="temp" blockGap=8
+//% block="mitemp" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
 
