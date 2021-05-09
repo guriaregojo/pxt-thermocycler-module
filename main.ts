@@ -174,7 +174,7 @@ let B_param_equation:  number=0;
 let tempCelsius: number=0;
 let tempFarenheit: number=0;
 
-//% block="buen" blockGap=8
+//% block="bue" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
 
@@ -183,8 +183,8 @@ while (totalmillis<=60*1000){
     //////TEXT START PCR
 start=control.millis();
 //pause(1000); //give time for OLED to initialize
- String(" START PCR",40,50,1); //meter un espacio antes de la "S"
-clear();
+ //String(" START PCR",40,50,1); //meter un espacio antes de la "S"
+//clear();
  pause(2000);
  //borro todo por si acaso
 
