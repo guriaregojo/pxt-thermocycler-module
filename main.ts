@@ -174,7 +174,7 @@ let B_param_equation:  number=0;
 let tempCelsius: number=0;
 let tempFarenheit: number=0;
 
-//% block="vale" blockGap=8
+//% block="guyhjkmn" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
 
@@ -232,12 +232,12 @@ tempFarenheit = (tempCelsius * 1.8) + 32;
   String(" F*: ",55,200,1); //meter un espacio antes de la "S"
   pause(2000);
   String("             ",20,50,1); //meter un espacio antes de la "S"
-  String("    ",20,60,1);
-  String("          ",50,60,1); //meter un espacio antes de la "S"
-  String("    ",15,150,1);
-  String("     ",55,200,1); //meter un espacio antes de la "S"
- pause(1000);
- clear();
+  String("             ",20,60,1);
+  String("             ",50,60,1); //meter un espacio antes de la "S"
+  String("             ",15,150,1);
+  String("             ",55,200,1); //meter un espacio antes de la "S"
+ pause(2000);
+
 //}//close while
 
 
