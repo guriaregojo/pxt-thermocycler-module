@@ -228,7 +228,7 @@ tempFarenheit = (tempCelsius * 1.8) + 32;
   Number(tempCelsius,20,60,1);
   String(" Celsius: ",50,60,1); //meter un espacio antes de la "S"
   Number(tempFarenheit,15,150,1);
-  String(" F*: ",55,200,1); //meter un espacio antes de la "S"
+  String(" Farenhe: ",55,200,1); //meter un espacio antes de la "S"
   pause(1000);
  sum=0;
 //}//close while
