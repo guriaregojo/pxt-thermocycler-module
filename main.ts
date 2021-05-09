@@ -166,7 +166,7 @@ let themillis: number=0;
  let totalmillis: number=0;
   ////THERMISTOR READING RESISTANCE////////
 let SERIESRESISTOR: number=1000 /// the value of the extra resistor (measure exact with multi)
-let THERMISTRESISTOR:number=1000;
+let THERMISTRESISTOR:number=890; //el mio
 let average: number=0
 let i: number=0;
 let sum: number=0;
@@ -220,6 +220,7 @@ B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15))
 B_param_equation = 1.0 / B_param_equation;  // Inverse
 B_param_equation = B_param_equation -273.15;  //from kelving to celcius
 tempCelsius=B_param_equation;
+ tempCelsius=roundTotwo( tempCelsius);
 tempFarenheit = (tempCelsius * 1.8) + 32;
 ///////////////////////////////////////////////////*/
  //DISPLAY TEMPERATURE ON SCREEN:
