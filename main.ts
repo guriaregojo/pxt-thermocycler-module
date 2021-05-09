@@ -230,6 +230,7 @@ tempFarenheit = (tempCelsius * 1.8) + 32;
   Number(tempFarenheit,15,150,1);
   String(" F*: ",55,200,1); //meter un espacio antes de la "S"
   pause(1000);
+ sum=0;
 //}//close while
 
 
