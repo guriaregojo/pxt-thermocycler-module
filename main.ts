@@ -174,7 +174,7 @@ let B_param_equation:  number=0;
 let tempCelsius: number=0;
 let tempFarenheit: number=0;
 
-//% block="latemp" blockGap=8
+//% block="layuht" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
 
@@ -229,7 +229,7 @@ tempFarenheit = (tempCelsius * 1.8) + 32;
   Number(tempCelsius,20,60,1);
   String(" Celsius: ",50,60,1); //meter un espacio antes de la "S"
   Number(tempFarenheit,15,150,1);
-  String(" Farenhe: ",55,200,1); //meter un espacio antes de la "S"
+  String(" F*: ",55,200,1); //meter un espacio antes de la "S"
   pause(2000);
   String("     ",20,60,1)
   String("     ",15,150,1)
