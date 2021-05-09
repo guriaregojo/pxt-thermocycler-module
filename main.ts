@@ -174,33 +174,33 @@ let B_param_equation:  number=0;
 let tempCelsius: number=0;
 let tempFarenheit: number=0;
 
-//% block="bue" blockGap=8
+//% block="temp" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
 
 
-while (totalmillis<=60*1000){
+//while (totalmillis<=60*1000){
     //////TEXT START PCR
-start=control.millis();
+//start=control.millis();
 //pause(1000); //give time for OLED to initialize
  //String(" START PCR",40,50,1); //meter un espacio antes de la "S"
 //clear();
- pause(2000);
+ //pause(2000);
  //borro todo por si acaso
 
-                pins.A2.digitalWrite(false);
-                pins.A3.digitalWrite(false);
-                pins.A4.digitalWrite(false);
+                //pins.A2.digitalWrite(false);
+                //pins.A3.digitalWrite(false);
+                //pins.A4.digitalWrite(false);
      //pause(2000);
-                pins.A2.digitalWrite(true);
-                pins.A3.digitalWrite(true);
-                pins.A4.digitalWrite(true);
+                //pins.A2.digitalWrite(true);
+                //pins.A3.digitalWrite(true);
+                //pins.A4.digitalWrite(true);
  //pause(2000);
  themillis=control.millis()-start;
  //Number(themillis,20,60,1);
  //pause(1000)
 
-    totalmillis=themillis+totalmillis;
+    //totalmillis=themillis+totalmillis;
   //String(" Hey",40,50,1); //meter un espacio antes de la "S"
   //Number(totalmillis,20,60,1);
 
