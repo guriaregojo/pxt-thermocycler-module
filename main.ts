@@ -174,7 +174,7 @@ let B_param_equation:  number=0;
 let tempCelsius: number=0;
 let tempFarenheit: number=0;
 
-//% block="nuevo" blockGap=8
+//% block="actualizado" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
 
@@ -225,18 +225,13 @@ tempCelsius=B_param_equation;
 tempFarenheit = (tempCelsius * 1.8) + 32;
 ///////////////////////////////////////////////////*/
  //DISPLAY TEMPERATURE ON SCREEN:
-  String(" Temperature: ",20,50,1); //meter un espacio antes de la "S"
-  Number(tempCelsius,20,60,1);
-  String(" Celsius: ",50,60,1); //meter un espacio antes de la "S"
-  Number(tempFarenheit,15,150,1);
-  String(" Farenheit: ",55,200,1); //meter un espacio antes de la "S"
+  String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
+  Number(tempCelsius,20,4,1);
+  String(" Celsius: ",60,4,1); //meter un espacio antes de la "S"
+  Number(tempFarenheit,15,6,1);
+  String(" Farenheit: ",60,6,1); //meter un espacio antes de la "S"
   pause(2000);
-  String("             ",20,50,1); //meter un espacio antes de la "S"
-  String("             ",20,60,1);
-  String("             ",50,60,1); //meter un espacio antes de la "S"
-  String("             ",15,150,1);
-  String("             ",55,200,1); //meter un espacio antes de la "S"
- pause(2000);
+  clear();
 
 //}//close while
 
