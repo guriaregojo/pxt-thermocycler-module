@@ -210,6 +210,7 @@ sum=sum+pins.A1.analogRead();
 pause(10);
 }
 average=sum/5;
+ sum=0;
 
  // convert the value to resistance
  average = 1023 / average - 1;
@@ -229,8 +230,10 @@ tempFarenheit = (tempCelsius * 1.8) + 32;
   String(" Celsius: ",50,60,1); //meter un espacio antes de la "S"
   Number(tempFarenheit,15,150,1);
   String(" Farenhe: ",55,200,1); //meter un espacio antes de la "S"
-  pause(1000);
- sum=0;
+  pause(2000);
+  String("     ",20,60,1)
+  String("     ",15,150,1)
+ pause(1000);
  clear();
 //}//close while
 
