@@ -174,7 +174,7 @@ let B_param_equation:  number=0;
 let tempCelsius: number=0;
 let tempFarenheit: number=0;
 
-//% block="actualizado" blockGap=8
+//% block="truncate" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
 
@@ -221,8 +221,9 @@ B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15))
 B_param_equation = 1.0 / B_param_equation;  // Inverse
 B_param_equation = B_param_equation -273.15;  //from kelving to celcius
 tempCelsius=B_param_equation;
- //tempCelsius=roundTotwo( tempCelsius);
+tempCelsius=Math.round(tempCelsius * 100) / 100
 tempFarenheit = (tempCelsius * 1.8) + 32;
+tempFarenheit=Math.round(tempFarenheit * 100) / 100
 ///////////////////////////////////////////////////*/
  //DISPLAY TEMPERATURE ON SCREEN:
   String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
