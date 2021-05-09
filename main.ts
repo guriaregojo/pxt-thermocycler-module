@@ -174,7 +174,7 @@ let B_param_equation:  number=0;
 let tempCelsius: number=0;
 let tempFarenheit: number=0;
 
-//% block="bueno dias" blockGap=8
+//% block="buen" blockGap=8
 //% weight=100 color=#FFA533
 export function hello(): void {
 
@@ -220,7 +220,7 @@ B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15))
 B_param_equation = 1.0 / B_param_equation;  // Inverse
 B_param_equation = B_param_equation -273.15;  //from kelving to celcius
 tempCelsius=B_param_equation;
- tempCelsius=roundTotwo( tempCelsius);
+ //tempCelsius=roundTotwo( tempCelsius);
 tempFarenheit = (tempCelsius * 1.8) + 32;
 ///////////////////////////////////////////////////*/
  //DISPLAY TEMPERATURE ON SCREEN:
