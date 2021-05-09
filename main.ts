@@ -184,20 +184,21 @@ while (totalmillis<=60*1000){
 start=control.millis();
 //pause(1000); //give time for OLED to initialize
  String(" START PCR",40,50,1); //meter un espacio antes de la "S"
-
+clear();
+ pause(2000);
  //borro todo por si acaso
 
                 pins.A2.digitalWrite(false);
                 pins.A3.digitalWrite(false);
                 pins.A4.digitalWrite(false);
-     pause(2000);
+     //pause(2000);
                 pins.A2.digitalWrite(true);
                 pins.A3.digitalWrite(true);
                 pins.A4.digitalWrite(true);
- pause(2000);
+ //pause(2000);
  themillis=control.millis()-start;
  //Number(themillis,20,60,1);
- pause(1000)
+ //pause(1000)
 
     totalmillis=themillis+totalmillis;
   //String(" Hey",40,50,1); //meter un espacio antes de la "S"
