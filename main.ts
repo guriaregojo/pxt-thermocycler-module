@@ -179,7 +179,7 @@ let tempFarenheit: number=0;
 export function hello(): void {
 
 
-
+while (totalmillis<=60*1000){
     //////TEXT START PCR
 start=control.millis();
 //pause(1000); //give time for OLED to initialize
@@ -196,12 +196,12 @@ start=control.millis();
                 pins.A4.digitalWrite(true);
  pause(2000);
  themillis=control.millis()-start;
- Number(themillis,20,60,1);
+ //Number(themillis,20,60,1);
  pause(1000)
 
     totalmillis=themillis+totalmillis;
-  String(" Hey",40,50,1); //meter un espacio antes de la "S"
-  Number(totalmillis,20,60,1);
+  //String(" Hey",40,50,1); //meter un espacio antes de la "S"
+  //Number(totalmillis,20,60,1);
 
 
 for (i=0; i< 5; i++){  //coger 5 samples
@@ -228,7 +228,7 @@ tempFarenheit = (tempCelsius * 1.8) + 32;
   Number(tempFarenheit,15,150,1);
   String(" F*: ",55,200,1); //meter un espacio antes de la "S"
   pause(1000)
- 
+}
 
    } //close prueba block
  
