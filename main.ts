@@ -728,7 +728,7 @@ export function elongation(value: elongate, time: pcr_times): void {
 }  //close elongation block
  
  
- //% block="get temperature" blockGap=8
+ //% block="nuevo" blockGap=8
 //% weight=70 color=#AA278D
 export function medirtempe(): void {
    
