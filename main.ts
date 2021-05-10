@@ -61,28 +61,28 @@ namespace PCR { //mi icono de PCR en el desplegable
 /*
 /*inicializar pantalla*/
  
- export enum DISPLAY_ONOFF {
+ /*export enum DISPLAY_ONOFF {
     //% block="ON"
     DISPLAY_ON = 1,
     //% block="OFF"
     DISPLAY_OFF = 0
- }
+ }*/
  
- const MIN_X = 0
- const MIN_Y = 0
+ //const MIN_X = 0
+ //const MIN_Y = 0
  const MAX_X = 127
- const MAX_Y = 63
+ //const MAX_Y = 63
  
  let _I2CAddr = 60
  let _screen = pins.createBuffer(1025)
- let _buf2 = pins.createBuffer(2)
+ //let _buf2 = pins.createBuffer(2)
  let _buf3 = pins.createBuffer(3)
  let _buf4 = pins.createBuffer(4)
  let _buf7 = pins.createBuffer(7)
  _buf7[0] = 0x40
- let _DRAW = 1
+ /*let _DRAW = 1
  let _cx = 0
- let _cy = 0
+ let _cy = 0*/
  
  function cmd1(d: number) {
     let n = d % 256;
@@ -110,12 +110,12 @@ namespace PCR { //mi icono de PCR en el desplegable
     cmd1(0x10 | (col >> 4)) // upper start column address    
  }
  
- // clear bit
+ /*/ clear bit
  function clrbit(d: number, b: number): number {
     if (d & (1 << b))
         d -= (1 << b)
     return d
- }
+ }*/
  
  //draw refresh screen
  
@@ -155,7 +155,7 @@ namespace PCR { //mi icono de PCR en el desplegable
     String(num.toString(), col, row, color) //row goes from 0-7 ; column goes from 0-150
  }
  
- function scroll() {
+ /*function scroll() {
     _cx = 0
     _cy++
     if (_cy > 7) {
@@ -164,7 +164,7 @@ namespace PCR { //mi icono de PCR en el desplegable
         _screen[0] = 0x40
         draw(1)
     }
- }
+ }*/
  
 
  /**
@@ -218,8 +218,8 @@ namespace PCR { //mi icono de PCR en el desplegable
  let totalmillis: number=0; 
 
  //declaración variables de termistor
- let SERIESRESISTOR: number=1000 /// the value of the extra resistor (measure exact with multi)
- let THERMISTRESISTOR:number=890; //el mio
+ let SERIESRESISTOR: number=10000 /// the value of the extra resistor (measure exact with multi)
+ let THERMISTRESISTOR:number=10000; //el mio
  let average: number=0
  let i: number=0;
  let sum: number=0;
@@ -248,7 +248,7 @@ clear(); //borro todo por si acaso
 for (i=0; i< 5; i++){  //coger 5 samples
     sum=sum+pins.A1.analogRead();
     pause(10);
-    }
+}
     average=sum/5;
     sum=0;
     
@@ -320,7 +320,7 @@ export function denaturation(value: denature, time: pcr_times): void {
         for (i=0; i< 5; i++){  //coger 5 samples
             sum=sum+pins.A1.analogRead();
             pause(10);
-            }
+        }
             average=sum/5;
             sum=0;
             
@@ -379,7 +379,7 @@ export function denaturation(value: denature, time: pcr_times): void {
                pins.A2.digitalWrite(true);
                pins.A3.digitalWrite(true);
                pins.A4.digitalWrite(true);
-               }//cierro if count<<thetime
+               }//cierro if totalmillis<<thetime
                else{
                    changeblock=2; //salgo del while
                 }
@@ -398,7 +398,6 @@ export function denaturation(value: denature, time: pcr_times): void {
 //% block="Annealing at %value during %time" blockGap=8
 //% weight=80 color=#AA278D
 export function annealing(value: anneal, time: pcr_times): void {
-    
     changeblock=2;
 
     switch(time) { 
@@ -611,6 +610,7 @@ export function elongation(value: elongate, time: pcr_times): void {
         pins.A0.digitalWrite(true);
         if(tempCelsius>=72){
             changeblock=5;
+            totalmillis=0;
             String(" START ",20,2,1); 
             String(" ELONGATION",20,4,1);
             pause(1000); //give time for OLED to initialize
