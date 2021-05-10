@@ -80,9 +80,9 @@ namespace PCR { //mi icono de PCR en el desplegable
  let _buf4 = pins.createBuffer(4)
  let _buf7 = pins.createBuffer(7)
  _buf7[0] = 0x40
- /*let _DRAW = 1
+ //let _DRAW = 1
  let _cx = 0
- let _cy = 0*/
+ let _cy = 0
  
  function cmd1(d: number) {
     let n = d % 256;
@@ -726,6 +726,46 @@ export function elongation(value: elongate, time: pcr_times): void {
             totalmillis=themillis+totalmillis;
         } //cierro while
 }  //close elongation block
+ 
+ 
+ //% block="get temperature" blockGap=8
+//% weight=70 color=#AA278D
+export function medirtempe(): void {
+   
+    //lectura temperatura + proyeccion en oled
+    ////THERMISTOR READING RESISTANCE////////
+        for (i=0; i< 5; i++){  //coger 5 samples
+        sum=sum+pins.A1.analogRead();
+        pause(10);
+        }
+        average=sum/5;
+        sum=0;
+        
+         // convert the value to resistance
+         average = 1023 / average - 1;
+         average = SERIESRESISTOR / average;
+        
+    ////THERMISTOR CALCULATING TEMPERATURE
+    B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
+    B_param_equation = 1.0 / B_param_equation;  // Inverse
+    B_param_equation = B_param_equation -273.15;  //from kelving to celcius
+    tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
+    tempFarenheit = (tempCelsius * 1.8) + 32;
+    tempFarenheit=Math.round(tempFarenheit * 100) / 100;
+///////////////////////////////////////////////////*/
+
+   //DISPLAY TEMPERATURE ON SCREEN:
+   String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
+   Number(tempCelsius,20,4,1);
+   String(" Celsius ",60,4,1); //meter un espacio antes de la "S"
+   Number(tempFarenheit,15,6,1);
+   String(" Farenheit ",60,6,1); //meter un espacio antes de la "S"
+   pause(2000);
+   clear();
+   //////
+
+    
+}  //close tempe block
 
 } //close namespace 
 
