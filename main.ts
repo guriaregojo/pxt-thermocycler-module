@@ -61,26 +61,26 @@ namespace PCR { //mi icono de PCR en el desplegable
 /*
 /*inicializar pantalla*/
  
- /*export enum DISPLAY_ONOFF {
+ export enum DISPLAY_ONOFF {
     //% block="ON"
     DISPLAY_ON = 1,
     //% block="OFF"
     DISPLAY_OFF = 0
- }*/
+ }
  
- //const MIN_X = 0
- //const MIN_Y = 0
+ const MIN_X = 0
+ const MIN_Y = 0
  const MAX_X = 127
- //const MAX_Y = 63
+ const MAX_Y = 63
  
  let _I2CAddr = 60
  let _screen = pins.createBuffer(1025)
- //let _buf2 = pins.createBuffer(2)
+ let _buf2 = pins.createBuffer(2)
  let _buf3 = pins.createBuffer(3)
  let _buf4 = pins.createBuffer(4)
  let _buf7 = pins.createBuffer(7)
  _buf7[0] = 0x40
- //let _DRAW = 1
+ let _DRAW = 1
  let _cx = 0
  let _cy = 0
  
@@ -110,12 +110,12 @@ namespace PCR { //mi icono de PCR en el desplegable
     cmd1(0x10 | (col >> 4)) // upper start column address    
  }
  
- /*/ clear bit
+  clear bit
  function clrbit(d: number, b: number): number {
     if (d & (1 << b))
         d -= (1 << b)
     return d
- }*/
+ }
  
  //draw refresh screen
  
@@ -155,7 +155,7 @@ namespace PCR { //mi icono de PCR en el desplegable
     String(num.toString(), col, row, color) //row goes from 0-7 ; column goes from 0-150
  }
  
- /*function scroll() {
+ function scroll() {
     _cx = 0
     _cy++
     if (_cy > 7) {
@@ -164,7 +164,7 @@ namespace PCR { //mi icono de PCR en el desplegable
         _screen[0] = 0x40
         draw(1)
     }
- }*/
+ }
  
 
  /**
