@@ -110,7 +110,7 @@ namespace PCR { //mi icono de PCR en el desplegable
     cmd1(0x10 | (col >> 4)) // upper start column address    
  }
  
-  clear bit
+  //clear bit
  function clrbit(d: number, b: number): number {
     if (d & (1 << b))
         d -= (1 << b)
