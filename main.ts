@@ -61,26 +61,26 @@ namespace PCR { //mi icono de PCR en el desplegable
 /*
 /*inicializar pantalla*/
  
- export enum DISPLAY_ONOFF {
+ /*export enum DISPLAY_ONOFF {
     //% block="ON"
     DISPLAY_ON = 1,
     //% block="OFF"
     DISPLAY_OFF = 0
- }
+ }*/
  
- const MIN_X = 0
- const MIN_Y = 0
+ //const MIN_X = 0
+ //const MIN_Y = 0
  const MAX_X = 127
- const MAX_Y = 63
+ //const MAX_Y = 63
  
  let _I2CAddr = 60
  let _screen = pins.createBuffer(1025)
- let _buf2 = pins.createBuffer(2)
+ //let _buf2 = pins.createBuffer(2)
  let _buf3 = pins.createBuffer(3)
  let _buf4 = pins.createBuffer(4)
  let _buf7 = pins.createBuffer(7)
  _buf7[0] = 0x40
- let _DRAW = 1
+ //let _DRAW = 1
  let _cx = 0
  let _cy = 0
  
@@ -110,12 +110,12 @@ namespace PCR { //mi icono de PCR en el desplegable
     cmd1(0x10 | (col >> 4)) // upper start column address    
  }
  
-  //clear bit
+  /*clear bit
  function clrbit(d: number, b: number): number {
     if (d & (1 << b))
         d -= (1 << b)
     return d
- }
+ }*/
  
  //draw refresh screen
  
@@ -155,7 +155,7 @@ namespace PCR { //mi icono de PCR en el desplegable
     String(num.toString(), col, row, color) //row goes from 0-7 ; column goes from 0-150
  }
  
- function scroll() {
+ /*function scroll() {
     _cx = 0
     _cy++
     if (_cy > 7) {
@@ -164,7 +164,7 @@ namespace PCR { //mi icono de PCR en el desplegable
         _screen[0] = 0x40
         draw(1)
     }
- }
+ }*/
  
 
  /**
@@ -218,9 +218,9 @@ namespace PCR { //mi icono de PCR en el desplegable
  let totalmillis: number=0; 
 
  //declaración variables de termistor
- let SERIESRESISTOR: number=10000 /// the value of the extra resistor (measure exact with multi)
+ let SERIESRESISTOR: number=10000; /// the value of the extra resistor (measure exact with multi)
  let THERMISTRESISTOR:number=10000; //el mio
- let average: number=0
+ let average: number=0;
  let i: number=0;
  let sum: number=0;
  let B_param_equation:  number=0;
@@ -260,6 +260,8 @@ for (i=0; i< 5; i++){  //coger 5 samples
     B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
     B_param_equation = 1.0 / B_param_equation;  // Inverse
     B_param_equation = B_param_equation -273.15;  //from kelving to celcius
+    tempCelsius=B_param_equation;
+ 
     tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
     tempFarenheit = (tempCelsius * 1.8) + 32;
     tempFarenheit=Math.round(tempFarenheit * 100) / 100;
@@ -329,13 +331,15 @@ export function denaturation(value: denature, time: pcr_times): void {
              average = SERIESRESISTOR / average;
             
      ////THERMISTOR CALCULATING TEMPERATURE
-     B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
-     B_param_equation = 1.0 / B_param_equation;  // Inverse
-     B_param_equation = B_param_equation -273.15;  //from kelving to celcius
-     tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
-     tempFarenheit = (tempCelsius * 1.8) + 32;
-     tempFarenheit=Math.round(tempFarenheit * 100) / 100;
- ///////////////////////////////////////////////////*/
+    B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
+    B_param_equation = 1.0 / B_param_equation;  // Inverse
+    B_param_equation = B_param_equation -273.15;  //from kelving to celcius
+    tempCelsius=B_param_equation;
+ 
+    tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
+    tempFarenheit = (tempCelsius * 1.8) + 32;
+    tempFarenheit=Math.round(tempFarenheit * 100) / 100;
+///////////////////////////////////////////////////*/
  
     //DISPLAY TEMPERATURE ON SCREEN:
     String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
@@ -435,6 +439,8 @@ export function annealing(value: anneal, time: pcr_times): void {
     B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
     B_param_equation = 1.0 / B_param_equation;  // Inverse
     B_param_equation = B_param_equation -273.15;  //from kelving to celcius
+    tempCelsius=B_param_equation;
+ 
     tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
     tempFarenheit = (tempCelsius * 1.8) + 32;
     tempFarenheit=Math.round(tempFarenheit * 100) / 100;
@@ -485,13 +491,15 @@ pins.A4.digitalWrite(false);
          average = 1023 / average - 1;
          average = SERIESRESISTOR / average;
         
-   ////THERMISTOR CALCULATING TEMPERATURE
-   B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
-   B_param_equation = 1.0 / B_param_equation;  // Inverse
-   B_param_equation = B_param_equation -273.15;  //from kelving to celcius
-   tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
-   tempFarenheit = (tempCelsius * 1.8) + 32;
-   tempFarenheit=Math.round(tempFarenheit * 100) / 100;
+    ////THERMISTOR CALCULATING TEMPERATURE
+    B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
+    B_param_equation = 1.0 / B_param_equation;  // Inverse
+    B_param_equation = B_param_equation -273.15;  //from kelving to celcius
+    tempCelsius=B_param_equation;
+ 
+    tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
+    tempFarenheit = (tempCelsius * 1.8) + 32;
+    tempFarenheit=Math.round(tempFarenheit * 100) / 100;
 ///////////////////////////////////////////////////*/
 
   //DISPLAY TEMPERATURE ON SCREEN:
@@ -588,6 +596,8 @@ export function elongation(value: elongate, time: pcr_times): void {
     B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
     B_param_equation = 1.0 / B_param_equation;  // Inverse
     B_param_equation = B_param_equation -273.15;  //from kelving to celcius
+    tempCelsius=B_param_equation;
+ 
     tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
     tempFarenheit = (tempCelsius * 1.8) + 32;
     tempFarenheit=Math.round(tempFarenheit * 100) / 100;
@@ -636,14 +646,16 @@ export function elongation(value: elongate, time: pcr_times): void {
                  average = 1023 / average - 1;
                  average = SERIESRESISTOR / average;
                 
-      ////THERMISTOR CALCULATING TEMPERATURE
-      B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
-      B_param_equation = 1.0 / B_param_equation;  // Inverse
-      B_param_equation = B_param_equation -273.15;  //from kelving to celcius
-      tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
-      tempFarenheit = (tempCelsius * 1.8) + 32;
-      tempFarenheit=Math.round(tempFarenheit * 100) / 100;
-  ///////////////////////////////////////////////////*/
+    ////THERMISTOR CALCULATING TEMPERATURE
+    B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
+    B_param_equation = 1.0 / B_param_equation;  // Inverse
+    B_param_equation = B_param_equation -273.15;  //from kelving to celcius
+    tempCelsius=B_param_equation;
+ 
+    tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
+    tempFarenheit = (tempCelsius * 1.8) + 32;
+    tempFarenheit=Math.round(tempFarenheit * 100) / 100;
+///////////////////////////////////////////////////*/
   
      //DISPLAY TEMPERATURE ON SCREEN:
      String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
@@ -728,7 +740,7 @@ export function elongation(value: elongate, time: pcr_times): void {
 }  //close elongation block
  
  
- //% block="nuevo" blockGap=8
+ //% block="het" blockGap=8
 //% weight=70 color=#AA278D
 export function medirtempe(): void {
    
@@ -749,6 +761,8 @@ export function medirtempe(): void {
     B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
     B_param_equation = 1.0 / B_param_equation;  // Inverse
     B_param_equation = B_param_equation -273.15;  //from kelving to celcius
+    tempCelsius=B_param_equation;
+ 
     tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
     tempFarenheit = (tempCelsius * 1.8) + 32;
     tempFarenheit=Math.round(tempFarenheit * 100) / 100;
