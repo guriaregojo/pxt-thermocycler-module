@@ -740,10 +740,26 @@ export function elongation(value: elongate, time: pcr_times): void {
 }  //close elongation block
  
  
- //% block="het" blockGap=8
+ //% block="prueba" blockGap=8
 //% weight=70 color=#AA278D
-export function medirtempe(): void {
-   
+export function medirtempe(time: pcr_times): void {
+     switch(time) { 
+        case pcr_times.fifteenseconds: thetime=15000;break; //fifteenseconds=15000ms
+        case pcr_times.twentyseconds: thetime=20000;break;
+        case pcr_times.thirtyseconds: thetime=30000;break;
+        case pcr_times.fortyseconds: thetime=40000;break;
+        case pcr_times.oneminute: thetime=60000;break;
+        case pcr_times.twominutes: thetime=2*60000;break;
+        case pcr_times.threeminutes: thetime=3*60000;break;
+        case pcr_times.tenminutes: thetime=10*60000;break;
+    }
+ totalmillis=0;
+
+                pins.A2.digitalWrite(false);
+                pins.A3.digitalWrite(false);
+                pins.A4.digitalWrite(false);
+   while(totalmillis<=thetime){
+    start=control.millis();
     //lectura temperatura + proyeccion en oled
     ////THERMISTOR READING RESISTANCE////////
         for (i=0; i< 5; i++){  //coger 5 samples
@@ -777,6 +793,18 @@ export function medirtempe(): void {
    pause(2000);
    clear();
    //////
+    themillis=control.millis()-start;
+    totalmillis=themillis+totalmillis;
+   }//close while 
+                 pins.A2.digitalWrite(true);
+                pins.A3.digitalWrite(true);
+                pins.A4.digitalWrite(true);
+                  String(" APAGANDO ",40,2,1); //meter un espacio antes de la "S"
+                String(" VENTILADORES",40,4,1); //meter un espacio antes de la "S"
+ pause(2000)
+ clear();
+                 String(" STOP ",40,2,1); //meter un espacio antes de la "S"
+                String(" PRUEBA",40,4,1); //meter un espacio antes de la "S"
 
     
 }  //close tempe block
