@@ -740,7 +740,7 @@ export function elongation(value: elongate, time: pcr_times): void {
 }  //close elongation block
  
  
- //% block="prueba during %time" blockGap=8
+ //% block="holi during %time" blockGap=8
 //% weight=70 color=#AA278D
 export function medirtempe(time: pcr_times): void {
      switch(time) { 
@@ -790,7 +790,7 @@ export function medirtempe(time: pcr_times): void {
    String(" Celsius ",60,4,1); //meter un espacio antes de la "S"
    Number(tempFarenheit,15,6,1);
    String(" Farenheit ",60,6,1); //meter un espacio antes de la "S"
-   pause(2000);
+   pause(1000);
    clear();
    //////
     themillis=control.millis()-start;
