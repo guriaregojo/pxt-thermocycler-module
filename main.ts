@@ -81,8 +81,8 @@ namespace PCR { //mi icono de PCR en el desplegable
  let _buf7 = pins.createBuffer(7)
  _buf7[0] = 0x40
  //let _DRAW = 1
- let _cx = 0
- let _cy = 0
+ //let _cx = 0
+ //let _cy = 0
  
  function cmd1(d: number) {
     let n = d % 256;
@@ -172,7 +172,7 @@ namespace PCR { //mi icono de PCR en el desplegable
  */
  
  export function clear() {
-    _cx = _cy = 0
+    //_cx = _cy = 0
     _screen.fill(0)
     _screen[0] = 0x40
     draw(1)
