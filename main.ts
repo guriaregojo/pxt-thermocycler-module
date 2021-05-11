@@ -213,11 +213,15 @@ namespace PCR { //mi icono de PCR en el desplegable
 
 
  
- //declaración variables de tiempo
+ //declaración variables de acumulacion tiempo
  let start: number=0;
  let themillis: number=0;
  let thetime: number=0; 
  let totalmillis: number=0; 
+ //declaracion cambios ciclos
+ let changeblock: number=0;
+ let fullcycle: number=0;
+
 
 function leertemp():number{
     //declaración variables de termistor
@@ -262,11 +266,7 @@ function leertemp():number{
    clear();
    return tempCelsius;
     
-}
-
- //declaracion cambios ciclos
- let changeblock: number=0;
- let fullcycle: number=0;
+}//close f(x) medir tempe
 
  function timeselection(usertime:pcr_times):void{
     switch(usertime) { 
@@ -279,7 +279,7 @@ function leertemp():number{
         case pcr_times.threeminutes: thetime=3*60000;break;
         case pcr_times.tenminutes: thetime=10*60000;break;
     }
-}
+}//close f(x) selection
 
 //% block="Start the PCR" blockGap=8
 //% weight=100 color=#FFA533
@@ -294,11 +294,8 @@ export function Start_PCR(): void {
         
         //3) calentar a denature temperature
                 while (changeblock==0){
-        ////THERMISTOR READING RESISTANCE////////
-
                     let tempCelsius=leertemp();
-
-
+                 
                     if(tempCelsius<=55){ 
                             //calentar hasta detectar 55º con intencion de que llegue a 94º
                             pins.A0.digitalWrite(false); //calentar
@@ -321,7 +318,7 @@ export function Start_PCR(): void {
 //% weight=90 color=#AA278D
 export function denaturation(value: denature, time: pcr_times): void {
  
-    timeselection(time)
+    timeselection(time);
 
     changeblock=1;
 
@@ -333,38 +330,7 @@ export function denaturation(value: denature, time: pcr_times): void {
     
     while (changeblock==1){
         start=control.millis(); //number of milliseconds ellapsed since january 1
-        ////lectura temperatura + proyeccion en pantalla
-        for (i=0; i< 5; i++){  //coger 5 samples
-            sum=sum+pins.A1.analogRead();
-            pause(10);
-        }
-            average=sum/5;
-            sum=0;
-            
-             // convert the value to resistance
-             average = 1023 / average - 1;
-             average = SERIESRESISTOR / average;
-            
-     ////THERMISTOR CALCULATING TEMPERATURE
-    B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
-    B_param_equation = 1.0 / B_param_equation;  // Inverse
-    B_param_equation = B_param_equation -273.15;  //from kelving to celcius
-    tempCelsius=B_param_equation;
- 
-    tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
-    tempFarenheit = (tempCelsius * 1.8) + 32;
-    tempFarenheit=Math.round(tempFarenheit * 100) / 100;
-///////////////////////////////////////////////////*/
- 
-    //DISPLAY TEMPERATURE ON SCREEN:
-    String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
-    Number(tempCelsius,20,4,1);
-    String(" Celsius ",60,4,1); //meter un espacio antes de la "S"
-    Number(tempFarenheit,15,6,1);
-    String(" Farenheit ",60,6,1); //meter un espacio antes de la "S"
-    pause(2000);
-    clear();
-
+        let tempCelsius=leertemp();
         switch(value) {
                case denature.ninetyfour: 
                if (totalmillis<=thetime){ //denature initialize: x mins a x temperaturaº, esta calculado que 1 count= 2 segundos
@@ -417,9 +383,9 @@ export function denaturation(value: denature, time: pcr_times): void {
 //% block="Annealing at %value during %time" blockGap=8
 //% weight=80 color=#AA278D
 export function annealing(value: anneal, time: pcr_times): void {
-    changeblock=2;
+       changeblock=2;
 
- timeselection(time);
+       timeselection(time);
        //////TEXT START PCR
        String(" STOP DENATURE",40,2,1); //meter un espacio antes de la "S"
        String(" Cooling to ",10,4,1);
@@ -429,344 +395,211 @@ export function annealing(value: anneal, time: pcr_times): void {
 
     while (changeblock==2){
 
-    ////THERMISTOR READING RESISTANCE////////
-    for (i=0; i< 5; i++){  //coger 5 samples
-        sum=sum+pins.A1.analogRead();
-        pause(10);
-        }
-        average=sum/5;
-        sum=0;
-        
-         // convert the value to resistance
-         average = 1023 / average - 1;
-         average = SERIESRESISTOR / average;
-        
-    ////THERMISTOR CALCULATING TEMPERATURE
-    B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
-    B_param_equation = 1.0 / B_param_equation;  // Inverse
-    B_param_equation = B_param_equation -273.15;  //from kelving to celcius
-    tempCelsius=B_param_equation;
- 
-    tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
-    tempFarenheit = (tempCelsius * 1.8) + 32;
-    tempFarenheit=Math.round(tempFarenheit * 100) / 100;
-///////////////////////////////////////////////////*/
+         let tempCelsius=leertemp();
 
-   //DISPLAY TEMPERATURE ON SCREEN:
-   String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
-   Number(tempCelsius,20,4,1);
-   String(" Celsius ",60,4,1); //meter un espacio antes de la "S"
-   Number(tempFarenheit,15,6,1);
-   String(" Farenheit ",60,6,1); //meter un espacio antes de la "S"
-   pause(2000);
-   clear();
+         pins.A0.digitalWrite(true);
+         pins.A2.digitalWrite(false);
+         pins.A3.digitalWrite(false);
+         pins.A4.digitalWrite(false);
 
-pins.A0.digitalWrite(true);
-pins.A2.digitalWrite(false);
-pins.A3.digitalWrite(false);
-pins.A4.digitalWrite(false);
-
-    if(tempCelsius<=69){
-        changeblock=3;
-        totalmillis=0;
-        //////TEXT START PCR
-        String(" START",20,2,1); //meter un espacio antes de la "S"
-        String("  ANNEALING",20,4,1); //meter un espacio antes de la "S"
-        pause(1000); //give time for OLED to initialize
-        clear(); //borro todo por si acaso
-        pins.A0.digitalWrite(true);
-        pins.A2.digitalWrite(true);
-        pins.A3.digitalWrite(true);
-        pins.A4.digitalWrite(true);
-    }
-    else{}
-}//cierro while change bloc
+         if(tempCelsius<=69){
+              changeblock=3;
+              totalmillis=0;
+              //////TEXT START PCR
+              String(" START",20,2,1); //meter un espacio antes de la "S"
+              String("  ANNEALING",20,4,1); //meter un espacio antes de la "S"
+              pause(1000); //give time for OLED to initialize
+              clear(); //borro todo por si acaso
+              pins.A0.digitalWrite(true);
+              pins.A2.digitalWrite(true);
+              pins.A3.digitalWrite(true);
+              pins.A4.digitalWrite(true);
+         }
+         else{}
+      }//cierro while change bloc
 
     while (changeblock==3){
-    start=control.millis();
-    ///lectura temperatura + proyeccion en oled
-        ////THERMISTOR READING RESISTANCE////////
-    for (i=0; i< 5; i++){  //coger 5 samples
-        sum=sum+pins.A1.analogRead();
-        pause(10);
-        }
-        average=sum/5;
-        sum=0;
-        
-         // convert the value to resistance
-         average = 1023 / average - 1;
-         average = SERIESRESISTOR / average;
-        
-    ////THERMISTOR CALCULATING TEMPERATURE
-    B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
-    B_param_equation = 1.0 / B_param_equation;  // Inverse
-    B_param_equation = B_param_equation -273.15;  //from kelving to celcius
-    tempCelsius=B_param_equation;
- 
-    tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
-    tempFarenheit = (tempCelsius * 1.8) + 32;
-    tempFarenheit=Math.round(tempFarenheit * 100) / 100;
-///////////////////////////////////////////////////*/
+           start=control.millis();
+           let tempCelsius=leertemp();
 
-  //DISPLAY TEMPERATURE ON SCREEN:
-  String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
-  Number(tempCelsius,20,4,1);
-  String(" Celsius ",60,4,1); //meter un espacio antes de la "S"
-  Number(tempFarenheit,15,6,1);
-  String(" Farenheit ",60,6,1); //meter un espacio antes de la "S"
-  pause(2000);
-  clear();
-  /////
-
-    switch(value) {
-        case anneal.sixtyeight: 
-            if (totalmillis<=thetime){ 
-                if (tempCelsius<=68){ 
-                    pins.A0.digitalWrite(false) ;//calentar
-                    if (tempCelsius>67 && tempCelsius<=66) {
-                    pause(2000); 
-                    }
-                    else if (tempCelsius<=64){
-                    pause(5000);}
-                    else {
-                    pause(1000);
-                    }
-                }
-                else if (tempCelsius>=69){
-                    pins.A3.digitalWrite(false);
-                    pins.A4.digitalWrite(false);
-                    if (tempCelsius>=70){
-                    pause(1500);
-                    }
-                    else {
-                    pause(800); 
-                    }
-                } 
-                else{
-                    pins.A0.digitalWrite(true);
-                    pins.A2.digitalWrite(true);
-                    pins.A3.digitalWrite(true);
-                    pins.A4.digitalWrite(true);
-                }
-            }//cierro if count
-            else{
-                changeblock=4;
-                     //////TEXT START PCR
-        String(" STOP ANNEALING",40,2,1); //meter un espacio antes de la "S"
-        String("Heating to ",20,4,1);
-        String("elongation temperature",20,6,1);
-        pause(1000); //give time for OLED to initialize
-        clear(); //borro todo por si acaso
-            }
-            break;
-            case anneal.sixty: 
-            //do things for sixty
-            break;
-            } //cierra switch
-            themillis=control.millis()-start;
-            totalmillis=themillis+totalmillis;
+           switch(value) {
+               case anneal.sixtyeight: 
+                   if (totalmillis<=thetime){ 
+                       if (tempCelsius<=68){ 
+                           pins.A0.digitalWrite(false) ;//calentar
+                           if (tempCelsius>67 && tempCelsius<=66) {
+                           pause(2000); 
+                           }
+                           else if (tempCelsius<=64){
+                           pause(5000);}
+                           else {
+                           pause(1000);
+                           }
+                       }
+                       else if (tempCelsius>=69){
+                           pins.A3.digitalWrite(false);
+                           pins.A4.digitalWrite(false);
+                           if (tempCelsius>=70){
+                           pause(1500);
+                           }
+                           else {
+                           pause(800); 
+                           }
+                       } 
+                       else{
+                           pins.A0.digitalWrite(true);
+                           pins.A2.digitalWrite(true);
+                           pins.A3.digitalWrite(true);
+                           pins.A4.digitalWrite(true);
+                       }
+                     }//cierro if count
+                   else {
+                       changeblock=4;
+                            //////TEXT START PCR
+                        String(" STOP ANNEALING",40,2,1); //meter un espacio antes de la "S"
+                        String("Heating to ",20,4,1);
+                        String("elongation temperature",20,6,1);
+                        pause(1000); //give time for OLED to initialize
+                        clear(); //borro todo por si acaso
+                         }
+                   break;
+                   case anneal.sixty: 
+                   //do things for sixty
+                   break;
+                   } //cierra switch
+         themillis=control.millis()-start;
+         totalmillis=themillis+totalmillis;
         } //cierro while
-}  
+}//cierro block  
 
 //% block="Elongation at %value during %time" blockGap=8
 //% weight=70 color=#AA278D
 export function elongation(value: elongate, time: pcr_times): void {
    changeblock=4;
-    
    timeselection(time);
 
-    while (changeblock==4){
-    //lectura temperatura + proyeccion en oled
-    ////THERMISTOR READING RESISTANCE////////
-        for (i=0; i< 5; i++){  //coger 5 samples
-        sum=sum+pins.A1.analogRead();
-        pause(10);
-        }
-        average=sum/5;
-        sum=0;
-        
-         // convert the value to resistance
-         average = 1023 / average - 1;
-         average = SERIESRESISTOR / average;
-        
-    ////THERMISTOR CALCULATING TEMPERATURE
-    B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
-    B_param_equation = 1.0 / B_param_equation;  // Inverse
-    B_param_equation = B_param_equation -273.15;  //from kelving to celcius
-    tempCelsius=B_param_equation;
- 
-    tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
-    tempFarenheit = (tempCelsius * 1.8) + 32;
-    tempFarenheit=Math.round(tempFarenheit * 100) / 100;
-///////////////////////////////////////////////////*/
-
-   //DISPLAY TEMPERATURE ON SCREEN:
-   String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
-   Number(tempCelsius,20,4,1);
-   String(" Celsius ",60,4,1); //meter un espacio antes de la "S"
-   Number(tempFarenheit,15,6,1);
-   String(" Farenheit ",60,6,1); //meter un espacio antes de la "S"
-   pause(2000);
-   clear();
-   //////
-
-    if(tempCelsius<=70){
-        pins.A0.digitalWrite(false); //calentar
-    }
-    else{
-        pins.A0.digitalWrite(true);
-        if(tempCelsius>=72){
-            changeblock=5;
-            totalmillis=0;
-            String(" START ",20,2,1); 
-            String(" ELONGATION",20,4,1);
-            pause(1000); //give time for OLED to initialize
-            clear(); //borro todo por si acaso
-        }
-        else{}
-    }
-    } //cierra while se supone
-
+   while (changeblock==4){
+         //lectura temperatura + proyeccion en oled
+        let tempCelsius=leertemp();
+         if(tempCelsius<=70){
+             pins.A0.digitalWrite(false); //calentar
+         }
+         else{
+             pins.A0.digitalWrite(true);
+             if(tempCelsius>=72){
+                 changeblock=5;
+                 totalmillis=0;
+                 String(" START ",20,2,1); 
+                 String(" ELONGATION",20,4,1);
+                 pause(1000); //give time for OLED to initialize
+                 clear(); //borro todo por si acaso
+             }
+             else{}
+          }//cierra if
+     } //cierra while se supone
 
     while (changeblock==5){
         start=control.millis();
-        ///lectura temperatura + proyeccion en oled
-            ////THERMISTOR READING RESISTANCE////////
-            for (i=0; i< 5; i++){  //coger 5 samples
-                sum=sum+pins.A1.analogRead();
-                pause(10);
-                }
-                average=sum/5;
-                sum=0;
-                
-                 // convert the value to resistance
-                 average = 1023 / average - 1;
-                 average = SERIESRESISTOR / average;
-                
-    ////THERMISTOR CALCULATING TEMPERATURE
-    B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
-    B_param_equation = 1.0 / B_param_equation;  // Inverse
-    B_param_equation = B_param_equation -273.15;  //from kelving to celcius
-    tempCelsius=B_param_equation;
- 
-    tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
-    tempFarenheit = (tempCelsius * 1.8) + 32;
-    tempFarenheit=Math.round(tempFarenheit * 100) / 100;
-///////////////////////////////////////////////////*/
-  
-     //DISPLAY TEMPERATURE ON SCREEN:
-     String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
-     Number(tempCelsius,20,4,1);
-     String(" Celsius ",60,4,1); //meter un espacio antes de la "S"
-     Number(tempFarenheit,15,6,1);
-     String(" Farenheit ",60,6,1); //meter un espacio antes de la "S"
-     pause(2000);
-     clear();
- /////
+        let tempCelsius=leertemp();
+        switch(value) {
+            case elongate.seventytwo: 
+                if (totalmillis<=thetime){ 
+                    if (tempCelsius<=72){ 
+                        pins.A0.digitalWrite(false); //calentar
+                        if (tempCelsius>71 && tempCelsius<=70) {
+                        pause(3000); 
+                        }
+                        else if (tempCelsius<=68){
+                        pause(5000);
+                        }
+                        else {
+                       pause(1000);
+                        }
+                    }
+                    else if (tempCelsius>=70){
+                        pins.A3.digitalWrite(false);
+                        pins.A4.digitalWrite(false);
+                        if (tempCelsius>=74){
+                        pause(1500);
+                        }
+                        else {
+                        pause(800); 
+                        }
+                    } 
+                    else{}
+                    pins.A0.digitalWrite(true);
+                    pins.A2.digitalWrite(true);
+                    pins.A3.digitalWrite(true);
+                    pins.A4.digitalWrite(true);
 
-    switch(value) {
-        case elongate.seventytwo: 
-            if (totalmillis<=thetime){ 
-                if (tempCelsius<=72){ 
-                    pins.A0.digitalWrite(false); //calentar
-                    if (tempCelsius>71 && tempCelsius<=70) {
-                    pause(3000); 
-                    }
-                    else if (tempCelsius<=68){
-                    pause(5000);
-                    }
-                    else {
-                   pause(1000);
-                    }
-                }
-                else if (tempCelsius>=70){
-                    pins.A3.digitalWrite(false);
-                    pins.A4.digitalWrite(false);
-                    if (tempCelsius>=74){
-                    pause(1500);
-                    }
-                    else {
-                    pause(800); 
-                    }
-                } 
-                else{}
-                pins.A0.digitalWrite(true);
-                pins.A2.digitalWrite(true);
-                pins.A3.digitalWrite(true);
-                pins.A4.digitalWrite(true);
-                
                   }//cierro if count
-            else{
-                changeblock=1; //back to denature a no ser que se hayan acabado los ciclos
-                String(" STOP ",40,2,1); //meter un espacio antes de la "S"
-                String(" ELONGATION",40,4,1); //meter un espacio antes de la "S"
-                pause(1000);
-                clear();
-        
-                fullcycle++;
-                //////TEXT NEW CYCLE
-                String(" END CYCLE",50,4,1); //meter un espacio antes de la "S"
-                Number(fullcycle,52,6,1);
-                pause(1000); //give time for OLED to initialize
-                clear(); //borro todo por si acaso
-                
-                if (fullcycle<30){
-                    String(" Heating to ",20,2,1);
-                    String(" denature",20,4,1);
+                else {
+                    changeblock=1; //back to denature a no ser que se hayan acabado los ciclos
+                    String(" STOP ",40,2,1); //meter un espacio antes de la "S"
+                    String(" ELONGATION",40,4,1); //meter un espacio antes de la "S"
+                    pause(1000);
+                    clear();
+                 
+                    fullcycle++;
+                    //////TEXT NEW CYCLE
+                    String(" END CYCLE",50,4,1); //meter un espacio antes de la "S"
+                    Number(fullcycle,52,6,1);
                     pause(1000); //give time for OLED to initialize
                     clear(); //borro todo por si acaso
-                }
-                else{
-                    /////TEXTO
-                    String(" END PCR",40,2,1); //meter un espacio antes de la "S"
-                    String("Take out samples",20,4,1);
-                    String("samples",20,6,1);
-                    pause(1000); //give time for OLED to initialize
-                    clear(); //borro todo por si acaso
-                 }
 
-            }
-            break;
-            case elongate.seventy: 
-            //do things for seventy
-            break;
-            } //cierra switch
-            themillis=control.millis()-start;
-            totalmillis=themillis+totalmillis;
-        } //cierro while
-}  //close elongation block
+                    if (fullcycle<30){
+                        String(" Heating to ",20,2,1);
+                        String(" denature",20,4,1);
+                        pause(1000); //give time for OLED to initialize
+                        clear(); //borro todo por si acaso
+                     }
+                    else {
+                        /////TEXTO
+                        String(" END PCR",40,2,1); //meter un espacio antes de la "S"
+                        String("Take out samples",20,4,1);
+                        String("samples",20,6,1);
+                        pause(1000); //give time for OLED to initialize
+                        clear(); //borro todo por si acaso
+                     }
+                   }//cierro else
+                break;
+             case elongate.seventy: 
+             //do things for seventy
+             break;
+        } //cierra switch
+        themillis=control.millis()-start;
+        totalmillis=themillis+totalmillis;
+    } //cierro while
+} //close elongation block
  
- 
- //% block="prueba during %time" blockGap=8
+ //% block="martes11 during %time" blockGap=8
 //% weight=70 color=#AA278D
 export function medirtempe(time: pcr_times): void {
     
-    timeselection(time);
- totalmillis=0;
+      timeselection(time);
+      totalmillis=0;
 
-                pins.A2.digitalWrite(false);
-                pins.A3.digitalWrite(false);
-                pins.A4.digitalWrite(false);
-   while(totalmillis<=thetime){
-    start=control.millis();
-    //lectura temperatura + proyeccion en oled
-    let tempCelsius=leertemp();
-    themillis=control.millis()-start;
-    totalmillis=themillis+totalmillis;
-   }//close while 
-                 pins.A2.digitalWrite(true);
-                pins.A3.digitalWrite(true);
-                pins.A4.digitalWrite(true);
-                  String(" APAGANDO ",40,2,1); //meter un espacio antes de la "S"
-                String(" VENTILADORES",40,4,1); //meter un espacio antes de la "S"
- pause(2000)
- clear();
-                 String(" STOP ",40,2,1); //meter un espacio antes de la "S"
-                String(" PRUEBA",40,4,1); //meter un espacio antes de la "S"
-
-    
-}  //close tempe block
-
+       pins.A2.digitalWrite(false);
+       pins.A3.digitalWrite(false);
+       pins.A4.digitalWrite(false);
+       while(totalmillis<=thetime){
+            start=control.millis();
+            //lectura temperatura + proyeccion en oled
+            let tempCelsius=leertemp();
+            themillis=control.millis()-start;
+            totalmillis=themillis+totalmillis;
+        }//close while 
+        pins.A2.digitalWrite(true);
+        pins.A3.digitalWrite(true);
+        pins.A4.digitalWrite(true);
+        String(" APAGANDO ",40,2,1); //meter un espacio antes de la "S"
+        String(" VENTILADORES",40,4,1); //meter un espacio antes de la "S"
+        pause(2000)
+        clear();
+        String(" STOP ",40,2,1); //meter un espacio antes de la "S"
+        String(" PRUEBA",40,4,1); //meter un espacio antes de la "S"
+ 
+  }//close tempe block
 } //close namespace 
 
  
