@@ -211,6 +211,8 @@ namespace PCR { //mi icono de PCR en el desplegable
 //let (updated) y const (no updated): block scoped
  // voy a declarar las variables con LET aqui y despues solo las reupdate NO redeclare
 
+
+ 
  //declaración variables de tiempo
  let start: number=0;
  let themillis: number=0;
@@ -230,6 +232,19 @@ namespace PCR { //mi icono de PCR en el desplegable
  //declaracion cambios ciclos
  let changeblock: number=0;
  let fullcycle: number=0;
+
+ function timeselection(usertime:pcr_times):void{
+    switch(usertime) { 
+        case pcr_times.fifteenseconds: thetime=15000;break; //fifteenseconds=15000ms
+        case pcr_times.twentyseconds: thetime=20000;break;
+        case pcr_times.thirtyseconds: thetime=30000;break;
+        case pcr_times.fortyseconds: thetime=40000;break;
+        case pcr_times.oneminute: thetime=60000;break;
+        case pcr_times.twominutes: thetime=2*60000;break;
+        case pcr_times.threeminutes: thetime=3*60000;break;
+        case pcr_times.tenminutes: thetime=10*60000;break;
+    }
+}
 
 //% block="Start the PCR" blockGap=8
 //% weight=100 color=#FFA533
@@ -299,17 +314,10 @@ for (i=0; i< 5; i++){  //coger 5 samples
 //% weight=90 color=#AA278D
 export function denaturation(value: denature, time: pcr_times): void {
  
+    timeselection(time)
+
     changeblock=1;
-    switch(time) { 
-        case pcr_times.fifteenseconds: thetime=15000;break; //fifteenseconds=15000ms
-        case pcr_times.twentyseconds: thetime=20000;break;
-        case pcr_times.thirtyseconds: thetime=30000;break;
-        case pcr_times.fortyseconds: thetime=40000;break;
-        case pcr_times.oneminute: thetime=60000;break;
-        case pcr_times.twominutes: thetime=2*60000;break;
-        case pcr_times.threeminutes: thetime=3*60000;break;
-        case pcr_times.tenminutes: thetime=10*60000;break;
-    }
+
         //////TEXT START PCR
         String("START",20,2,1); //meter un espacio antes de la "S"
         String("DENATURATION",20,4,1); //meter un espacio antes de la "S"
@@ -404,16 +412,7 @@ export function denaturation(value: denature, time: pcr_times): void {
 export function annealing(value: anneal, time: pcr_times): void {
     changeblock=2;
 
-    switch(time) { 
-        case pcr_times.fifteenseconds: thetime=15000;break; //fifteenseconds=15000ms
-        case pcr_times.twentyseconds: thetime=20000;break;
-        case pcr_times.thirtyseconds: thetime=30000;break;
-        case pcr_times.fortyseconds: thetime=40000;break;
-        case pcr_times.oneminute: thetime=60000;break;
-        case pcr_times.twominutes: thetime=2*60000;break;
-        case pcr_times.threeminutes: thetime=3*60000;break;
-        case pcr_times.tenminutes: thetime=10*60000;break;
-    }
+ timeselection(time);
        //////TEXT START PCR
        String(" STOP DENATURE",40,2,1); //meter un espacio antes de la "S"
        String(" Cooling to ",10,4,1);
@@ -567,16 +566,7 @@ pins.A4.digitalWrite(false);
 export function elongation(value: elongate, time: pcr_times): void {
    changeblock=4;
     
-    switch(time) { 
-        case pcr_times.fifteenseconds: thetime=15000;break; //fifteenseconds=15000ms
-        case pcr_times.twentyseconds: thetime=20000;break;
-        case pcr_times.thirtyseconds: thetime=30000;break;
-        case pcr_times.fortyseconds: thetime=40000;break;
-        case pcr_times.oneminute: thetime=60000;break;
-        case pcr_times.twominutes: thetime=2*60000;break;
-        case pcr_times.threeminutes: thetime=3*60000;break;
-        case pcr_times.tenminutes: thetime=10*60000;break;
-    }
+   timeselection(time);
 
     while (changeblock==4){
     //lectura temperatura + proyeccion en oled
@@ -743,16 +733,8 @@ export function elongation(value: elongate, time: pcr_times): void {
  //% block="holi during %time" blockGap=8
 //% weight=70 color=#AA278D
 export function medirtempe(time: pcr_times): void {
-     switch(time) { 
-        case pcr_times.fifteenseconds: thetime=15000;break; //fifteenseconds=15000ms
-        case pcr_times.twentyseconds: thetime=20000;break;
-        case pcr_times.thirtyseconds: thetime=30000;break;
-        case pcr_times.fortyseconds: thetime=40000;break;
-        case pcr_times.oneminute: thetime=60000;break;
-        case pcr_times.twominutes: thetime=2*60000;break;
-        case pcr_times.threeminutes: thetime=3*60000;break;
-        case pcr_times.tenminutes: thetime=10*60000;break;
-    }
+    
+    timeselection(time);
  totalmillis=0;
 
                 pins.A2.digitalWrite(false);
