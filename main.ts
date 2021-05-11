@@ -13,7 +13,6 @@
 //A11 conecto 1 venti  -> programo A4
 
 enum pcr_times {
-
     //% block="15 seconds"
     fifteenseconds,
     //% block="20 seconds"
@@ -31,6 +30,7 @@ enum pcr_times {
     //% block="10 minutes"
     tenminutes
 }
+
 enum denature {
     //% block="94º"
     ninetyfour,
@@ -58,31 +58,13 @@ const Font_5x7 = hex`000000000000005F00000007000700147F147F14242A072A12231308646
 //% weight=100 color=#AA278D icon="\uf0c3"
 namespace PCR { //mi icono de PCR en el desplegable
 
-/*
-/*inicializar pantalla*/
- 
- /*export enum DISPLAY_ONOFF {
-    //% block="ON"
-    DISPLAY_ON = 1,
-    //% block="OFF"
-    DISPLAY_OFF = 0
- }*/
- 
- //const MIN_X = 0
- //const MIN_Y = 0
  const MAX_X = 127
- //const MAX_Y = 63
- 
  let _I2CAddr = 60
  let _screen = pins.createBuffer(1025)
- //let _buf2 = pins.createBuffer(2)
  let _buf3 = pins.createBuffer(3)
  let _buf4 = pins.createBuffer(4)
  let _buf7 = pins.createBuffer(7)
  _buf7[0] = 0x40
- //let _DRAW = 1
- //let _cx = 0
- //let _cy = 0
  
  function cmd1(d: number) {
     let n = d % 256;
@@ -109,16 +91,8 @@ namespace PCR { //mi icono de PCR en el desplegable
     cmd1(0x00 | (col % 16)) // lower start column address
     cmd1(0x10 | (col >> 4)) // upper start column address    
  }
- 
-  /*clear bit
- function clrbit(d: number, b: number): number {
-    if (d & (1 << b))
-        d -= (1 << b)
-    return d
- }*/
- 
+
  //draw refresh screen
- 
  function draw(d: number) {
     if (d > 0) {
         set_pos()
@@ -155,18 +129,6 @@ namespace PCR { //mi icono de PCR en el desplegable
     String(num.toString(), col, row, color) //row goes from 0-7 ; column goes from 0-150
  }
  
- /*function scroll() {
-    _cx = 0
-    _cy++
-    if (_cy > 7) {
-        _cy = 7
-        _screen.shift(128)
-        _screen[0] = 0x40
-        draw(1)
-    }
- }*/
- 
-
  /**
  * clear screen
  */
@@ -207,8 +169,8 @@ namespace PCR { //mi icono de PCR en el desplegable
  //////// HASTA AQUI HE CREADO TODAS LAS FUNCIONES QUE VOY A USAR EN MI OLED
 
  //block scope es todo lo que va entre {} por ejemplo un if,for y while{} son en si mismos un block scope
-// var: globally or function scoped and can be redeclared and reupdated. 
-//let (updated) y const (no updated): block scoped
+    // var: globally or function scoped and can be redeclared and reupdated. 
+    //let (updated) y const (no updated): block scoped
  // voy a declarar las variables con LET aqui y despues solo las reupdate NO redeclare
 
 
@@ -241,9 +203,9 @@ function leertemp():number{
     average=sum/5;
     sum=0;
     
-     // convert the value to resistance
-     average = 1023 / average - 1;
-     average = SERIESRESISTOR / average;
+    // convert the value to resistance
+    average = 1023 / average - 1;
+    average = SERIESRESISTOR / average;
     
     ////THERMISTOR CALCULATING TEMPERATURE
     B_param_equation = ((Math.log(average / THERMISTRESISTOR))/3950)+(1/(25+273.15)); //(1/To)+ 1/B * ln(R/Ro)
@@ -254,7 +216,6 @@ function leertemp():number{
     tempCelsius=Math.round(tempCelsius * 100) / 100; //2 decimales en pantalla
     tempFarenheit = (tempCelsius * 1.8) + 32;
     tempFarenheit=Math.round(tempFarenheit * 100) / 100;
-    ///////////////////////////////////////////////////*/
 
    //DISPLAY TEMPERATURE ON SCREEN:
    String(" Temperature: ",20,2,1); //meter un espacio antes de la "S"
@@ -279,7 +240,7 @@ function leertemp():number{
         case pcr_times.threeminutes: thetime=3*60000;break;
         case pcr_times.tenminutes: thetime=10*60000;break;
     }
-}//close f(x) selection
+}//close f(x) timeselection
 
 //% block="Start the PCR" blockGap=8
 //% weight=100 color=#FFA533
@@ -292,25 +253,24 @@ export function Start_PCR(): void {
         pause(1000); //give time for OLED to initialize
         clear(); //borro todo por si acaso
         
-        //3) calentar a denature temperature
-                while (changeblock==0){
-                    let tempCelsius=leertemp();
-                 
-                    if(tempCelsius<=55){ 
-                            //calentar hasta detectar 55º con intencion de que llegue a 94º
-                            pins.A0.digitalWrite(false); //calentar
-                        }
-                    else{
-                        pins.A0.digitalWrite(true);
-                        pins.A2.digitalWrite(true);
-                        pins.A3.digitalWrite(true);
-                        pins.A4.digitalWrite(true);
-                        }
-                    if(tempCelsius>=90){
-                        changeblock=1;
-                    }
-                    else{}
-                }//cierro while
+        // calentar a denature temperature
+        while (changeblock==0){
+            let tempCelsius=leertemp();
+            if(tempCelsius<=55){ 
+                //calentar hasta detectar 55º con intencion de que llegue a 94º
+                pins.A0.digitalWrite(false); //calentar
+            }
+            else{
+                pins.A0.digitalWrite(true);
+                pins.A2.digitalWrite(true);
+                pins.A3.digitalWrite(true);
+                pins.A4.digitalWrite(true);
+            }
+            if(tempCelsius>=90){
+               changeblock=1;
+            }
+            else{}
+         }//cierro while
 } //cierro start_PCR
 
 
@@ -319,84 +279,81 @@ export function Start_PCR(): void {
 export function denaturation(value: denature, time: pcr_times): void {
  
     timeselection(time);
-
     changeblock=1;
 
-        //////TEXT START PCR
-        String("START",20,2,1); //meter un espacio antes de la "S"
-        String("DENATURATION",20,4,1); //meter un espacio antes de la "S"
-        pause(1000); //give time for OLED to initialize
-        clear(); //borro todo por si acaso
+    //////TEXT START DENATURATION
+    String("START",20,2,1); //meter un espacio antes de la "S"
+    String("DENATURATION",20,4,1); //meter un espacio antes de la "S"
+    pause(1000); //give time for OLED to initialize
+    clear(); //borro todo por si acaso
     
     while (changeblock==1){
-        start=control.millis(); //number of milliseconds ellapsed since january 1
+        start=control.millis(); //number of milliseconds ellapsed since start of running program
         let tempCelsius=leertemp();
         switch(value) {
                case denature.ninetyfour: 
-               if (totalmillis<=thetime){ //denature initialize: x mins a x temperaturaº, esta calculado que 1 count= 2 segundos
-                   if (tempCelsius<=94){ 
-                       pins.A0.digitalWrite(false);
-                       if (tempCelsius>90 && tempCelsius<=92) {
-                       pause(2000); 
-                       }
-                       else if (tempCelsius<=90){
-                       pause(3000); 
-                       }
-                       else {
-                       pause(1500);
-                      }
-                   }
-               else if (tempCelsius>=94.5){
-                       pins.A3.digitalWrite(false);
-                       pins.A4.digitalWrite(false);
-                       if (tempCelsius>=96){
-                        pause(3000);
-                        }
-                       else if (tempCelsius>=95){
-                        pause(3000);
-                       }
-                       else{
-                        pause(1000);
-                       }
-                   }
-               else{} 
-               pins.A0.digitalWrite(true);
-               pins.A2.digitalWrite(true);
-               pins.A3.digitalWrite(true);
-               pins.A4.digitalWrite(true);
-               }//cierro if totalmillis<<thetime
-               else{
-                   changeblock=2; //salgo del while
-                }
-               
-               break; //cierro case 94º
-                       
-               case denature.ninetyeight: 
-               //aqui aguanta la temperatura a 98 grados
-               break;//cierro case 98º
-        } //cierra switch
+                    if (totalmillis<=thetime){ //denature initialize: x mins a x temperaturaº, esta calculado que 1 count= 2 segundos
+                        if (tempCelsius<=94){ 
+                            pins.A0.digitalWrite(false);
+                            if (tempCelsius>90 && tempCelsius<=92) {
+                            pause(2000); 
+                            }
+                            else if (tempCelsius<=90){
+                            pause(3000); 
+                            }
+                            else {
+                            pause(1500);
+                            }
+                            }
+                            else if (tempCelsius>=94.5){
+                                pins.A3.digitalWrite(false);
+                                pins.A4.digitalWrite(false);
+                                if (tempCelsius>=96){
+                                    pause(3000);
+                                }
+                                else if (tempCelsius>=95){
+                                    pause(3000);
+                                }
+                                else{
+                                    pause(1000);
+                                }
+                            }
+                            else{} 
+                            pins.A0.digitalWrite(true);
+                            pins.A2.digitalWrite(true);
+                            pins.A3.digitalWrite(true);
+                            pins.A4.digitalWrite(true);
+                    }//cierro if totalmillis<<thetime
+                        else{
+                            changeblock=2; //salgo del while
+                            }
+                 break; //cierro case 94º
+
+                case denature.ninetyeight: 
+                        //aqui aguanta la temperatura a 98 grados
+                 break;//cierro case 98º
+         } //cierra switch
         themillis=control.millis()-start;
         totalmillis=themillis+totalmillis;
     }//cierra while
-}
+}//ciero denaturation block
 
 //% block="Annealing at %value during %time" blockGap=8
 //% weight=80 color=#AA278D
 export function annealing(value: anneal, time: pcr_times): void {
-       changeblock=2;
-
-       timeselection(time);
-       //////TEXT START PCR
-       String(" STOP DENATURE",40,2,1); //meter un espacio antes de la "S"
-       String(" Cooling to ",10,4,1);
-       String(" annealing temperature",10,6,1);
-       pause(1000); //give time for OLED to initialize
-       clear(); //borro todo por si acaso
+       
+    changeblock=2;
+    timeselection(time);
+       
+    //////TEXT START PCR
+    String(" STOP DENATURE",40,2,1); //meter un espacio antes de la "S"
+    String(" Cooling to ",10,4,1);
+    String(" annealing temperature",10,6,1);
+    pause(1000); //give time for OLED to initialize
+    clear(); //borro todo por si acaso
 
     while (changeblock==2){
-
          let tempCelsius=leertemp();
-
          pins.A0.digitalWrite(true);
          pins.A2.digitalWrite(false);
          pins.A3.digitalWrite(false);
@@ -416,7 +373,7 @@ export function annealing(value: anneal, time: pcr_times): void {
               pins.A4.digitalWrite(true);
          }
          else{}
-      }//cierro while change bloc
+    }//cierro while change bloc
 
     while (changeblock==3){
            start=control.millis();
@@ -452,23 +409,23 @@ export function annealing(value: anneal, time: pcr_times): void {
                            pins.A3.digitalWrite(true);
                            pins.A4.digitalWrite(true);
                        }
-                     }//cierro if count
-                   else {
+                    }//cierro if count
+                    else {
                        changeblock=4;
-                            //////TEXT START PCR
+                        //////TEXT START PCR
                         String(" STOP ANNEALING",40,2,1); //meter un espacio antes de la "S"
                         String("Heating to ",20,4,1);
                         String("elongation temperature",20,6,1);
                         pause(1000); //give time for OLED to initialize
                         clear(); //borro todo por si acaso
-                         }
-                   break;
-                   case anneal.sixty: 
+                    }
+                break;
+                case anneal.sixty: 
                    //do things for sixty
-                   break;
+                break;
                    } //cierra switch
-         themillis=control.millis()-start;
-         totalmillis=themillis+totalmillis;
+                themillis=control.millis()-start;
+                totalmillis=themillis+totalmillis;
         } //cierro while
 }//cierro block  
 
@@ -479,8 +436,8 @@ export function elongation(value: elongate, time: pcr_times): void {
    timeselection(time);
 
    while (changeblock==4){
-         //lectura temperatura + proyeccion en oled
-        let tempCelsius=leertemp();
+
+         let tempCelsius=leertemp();
          if(tempCelsius<=70){
              pins.A0.digitalWrite(false); //calentar
          }
@@ -532,7 +489,7 @@ export function elongation(value: elongate, time: pcr_times): void {
                     pins.A3.digitalWrite(true);
                     pins.A4.digitalWrite(true);
 
-                  }//cierro if count
+                }//cierro if count
                 else {
                     changeblock=1; //back to denature a no ser que se hayan acabado los ciclos
                     String(" STOP ",40,2,1); //meter un espacio antes de la "S"
@@ -561,18 +518,18 @@ export function elongation(value: elongate, time: pcr_times): void {
                         pause(1000); //give time for OLED to initialize
                         clear(); //borro todo por si acaso
                      }
-                   }//cierro else
-                break;
-             case elongate.seventy: 
-             //do things for seventy
-             break;
+                 }//cierro else
+            break;
+            case elongate.seventy: 
+                //do things for seventy
+            break;
         } //cierra switch
         themillis=control.millis()-start;
         totalmillis=themillis+totalmillis;
     } //cierro while
 } //close elongation block
  
- //% block="martes11 during %time" blockGap=8
+ //% block="regalo during %time" blockGap=8
 //% weight=70 color=#AA278D
 export function medirtempe(time: pcr_times): void {
     
@@ -601,5 +558,3 @@ export function medirtempe(time: pcr_times): void {
  
   }//close tempe block
 } //close namespace 
-
- 
