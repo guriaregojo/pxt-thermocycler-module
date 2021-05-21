@@ -297,7 +297,7 @@ export function denaturation(value: denature, time: pcr_times): void {
                         if (tempCelsius<=94){ 
                             pins.A0.digitalWrite(false);
                             if (tempCelsius>=93){
-                            delay(1000);}
+                            pause(1000);}
                             if (tempCelsius>90 && tempCelsius<=92) {
                             pause(2000);}
                             else if (tempCelsius<=90){
