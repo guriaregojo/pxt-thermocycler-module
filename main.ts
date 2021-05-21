@@ -249,7 +249,7 @@ export function Start_PCR(): void {
  
         //////TEXT START PCR
         String(" START PCR",40,2,1); //meter un espacio antes de la "S"
-        String("Heating to ",20,4,1);
+        String("Heating to ",40,4,1);
         String("denaturation temperature",20,6,1);
         pause(1000); //give time for OLED to initialize
         clear(); //borro todo por si acaso
@@ -283,8 +283,8 @@ export function denaturation(value: denature, time: pcr_times): void {
     changeblock=1;
 
     //////TEXT START DENATURATION
-    String("START",40,3,1); //meter un espacio antes de la "S"
-    String("DENATURATION",20,5,1); //meter un espacio antes de la "S"
+    String("START",50,3,1); //meter un espacio antes de la "S"
+    String("DENATURATION",30,5,1); //meter un espacio antes de la "S"
     pause(1000); //give time for OLED to initialize
     clear(); //borro todo por si acaso
     
@@ -350,7 +350,7 @@ export function annealing(value: anneal, time: pcr_times): void {
     //////TEXT START PCR
     String(" STOP DENATURE",20,2,1); //meter un espacio antes de la "S"
     String(" Cooling to ",30,4,1);
-    String(" annealing ",40,6,1);
+    String(" annealing ",30,6,1);
     pause(1000); //give time for OLED to initialize
     clear(); //borro todo por si acaso
 
@@ -376,15 +376,10 @@ export function annealing(value: anneal, time: pcr_times): void {
          }
          else{}
     }//cierro while change bloc
-    String(" CAMBIO",40,3,1);
-     pause(1000); //give time for OLED to initialize
-     clear(); //borro todo por si acaso
+
 
     while (changeblock==3){
-     String(" WHILE 3",40,3,1);
-     pause(1000); //give time for OLED to initialize
-              clear(); //borro todo por si acaso
-     
+
            start=control.millis();
            let tempCelsius=leertemp();
 
@@ -392,9 +387,6 @@ export function annealing(value: anneal, time: pcr_times): void {
                case anneal.sixtyeight: 
                    if (totalmillis<=thetime){ 
                        if (tempCelsius<=68){ 
-                             String(" DENTRO 68",40,3,1);
-     pause(1000); //give time for OLED to initialize
-              clear(); //borro todo por si acaso
                            pins.A0.digitalWrite(false) ;//calentar
                            if (tempCelsius<67 && tempCelsius>=66) {
                            pause(3000); 
