@@ -243,7 +243,7 @@ function leertemp():number{
     }
 }//close f(x) timeselection
 
-//% block="Start the PCR" blockGap=8
+//% block="jeje the PCR" blockGap=8
 //% weight=100 color=#FFA533
 export function Start_PCR(): void {
  
@@ -365,8 +365,8 @@ export function annealing(value: anneal, time: pcr_times): void {
               changeblock=3;
               totalmillis=0;
               //////TEXT START PCR
-              String(" START",40,3,1); //meter un espacio antes de la "S"
-              String("  ANNEALING",20,5,1); //meter un espacio antes de la "S"
+              String("START",50,3,1); //meter un espacio antes de la "S"
+              String("ANNEALING",30,5,1); //meter un espacio antes de la "S"
               pause(1000); //give time for OLED to initialize
               clear(); //borro todo por si acaso
               pins.A0.digitalWrite(true);
@@ -417,9 +417,9 @@ export function annealing(value: anneal, time: pcr_times): void {
                     else {
                        changeblock=4;
                         //////TEXT START PCR
-                        String(" STOP ANNEALING",40,2,1); //meter un espacio antes de la "S"
-                        String("Heating to ",20,4,1);
-                        String("elongation temperature",20,6,1);
+                        String("STOP ANNEALING",20,2,1); //meter un espacio antes de la "S"
+                        String("Heating to ",35,4,1);
+                        String("elongation temp",30,6,1);
                         pause(1000); //give time for OLED to initialize
                         clear(); //borro todo por si acaso
                     }
@@ -450,8 +450,8 @@ export function elongation(value: elongate, time: pcr_times): void {
             
                  changeblock=5;
                  totalmillis=0;
-                 String(" START ",20,2,1); 
-                 String(" ELONGATION",20,4,1);
+                 String("START ",50,3,1); 
+                 String("ELONGATION",30,5,1);
                  pause(1000); //give time for OLED to initialize
                  clear(); //borro todo por si acaso
           }//cierra else
@@ -494,14 +494,20 @@ export function elongation(value: elongate, time: pcr_times): void {
 
                 }//cierro if count
                 else {
-                    if (fullcycle<30){
+                    if (fullcycle<=2){
                          if (cartel==0){
-                                String(" STOP ",40,2,1); //meter un espacio antes de la "S"
-                                String(" ELONGATION",40,4,1); //meter un espacio antes de la "S"
+                                String(" STOP ",50,3,1); //meter un espacio antes de la "S"
+                                String(" ELONGATION",30,5,1); //meter un espacio antes de la "S"
                                 pause(1000);
                                 clear();
                                 String(" Heating to ",20,2,1);
                                 String(" denature",20,4,1);
+                                pause(1000); //give time for OLED to initialize
+                                clear(); //borro todo por si acaso
+                                fullcycle++;
+                                //////TEXT NEW CYCLE
+                                String(" END CYCLE",50,4,1); //meter un espacio antes de la "S"
+                                Number(fullcycle,52,6,1);
                                 pause(1000); //give time for OLED to initialize
                                 clear(); //borro todo por si acaso
                                 cartel=1;
@@ -520,7 +526,7 @@ export function elongation(value: elongate, time: pcr_times): void {
                                          cartel=0;
                                          fullcycle++;
                                          //////TEXT NEW CYCLE
-                                         String(" END CYCLE",50,4,1); //meter un espacio antes de la "S"
+                                         String(" END CYCLE",20,4,1); //meter un espacio antes de la "S"
                                          Number(fullcycle,52,6,1);
                                          pause(1000); //give time for OLED to initialize
                                          clear(); //borro todo por si acaso
@@ -530,10 +536,10 @@ export function elongation(value: elongate, time: pcr_times): void {
                               } //cierro else 2
                        }//ciero if fullcycle<30
                     else{
-                            String(" END PCR",40,2,1); //meter un espacio antes de la "S"
-                            String("Take out samples",20,4,1);
-                            String("samples",20,6,1);
-                            pause(1000); //give time for OLED to initialize
+                            String(" END PCR",20,2,1); //meter un espacio antes de la "S"
+                            String("Take out ",30,4,1);
+                            String("samples",30,6,1);
+                            pause(2000); //give time for OLED to initialize
                             clear(); //borro todo por si acaso
                      }
                } //cierro else tocho
