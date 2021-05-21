@@ -243,7 +243,7 @@ function leertemp():number{
     }
 }//close f(x) timeselection
 
-//% block="Nuevo the PCR" blockGap=8
+//% block="Start the PCR" blockGap=8
 //% weight=100 color=#FFA533
 export function Start_PCR(): void {
  
@@ -408,12 +408,11 @@ export function annealing(value: anneal, time: pcr_times): void {
                            pause(800); 
                            }
                        } 
-                       else{
-                           pins.A0.digitalWrite(true);
-                           pins.A2.digitalWrite(true);
-                           pins.A3.digitalWrite(true);
-                           pins.A4.digitalWrite(true);
-                       }
+                       else{}
+                       pins.A0.digitalWrite(true);
+                       pins.A2.digitalWrite(true);
+                       pins.A3.digitalWrite(true);
+                       pins.A4.digitalWrite(true);
                     }//cierro if count
                     else {
                        changeblock=4;
