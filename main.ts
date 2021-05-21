@@ -547,7 +547,7 @@ export function elongation(value: elongate, time: pcr_times): void {
     } //cierro while
 } //close elongation block
  
- //% block="regalo during %time" blockGap=8
+ //% block="machine during %time" blockGap=8
 //% weight=70 color=#AA278D
 export function machinelearning(time: pcr_times): void {
     
