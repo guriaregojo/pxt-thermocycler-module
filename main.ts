@@ -224,7 +224,7 @@ function leertemp():number{
    String(" Celsius ",60,4,1); //meter un espacio antes de la "S"
    Number(tempFarenheit,15,6,1);
    String(" Farenheit ",60,6,1); //meter un espacio antes de la "S"
-   pause(2000);
+   pause(500);
    clear();
    return tempCelsius;
     
@@ -243,7 +243,7 @@ function leertemp():number{
     }
 }//close f(x) timeselection
 
-//% block="Start the PCR" blockGap=8
+//% block="Nuevo the PCR" blockGap=8
 //% weight=100 color=#FFA533
 export function Start_PCR(): void {
  
@@ -283,8 +283,8 @@ export function denaturation(value: denature, time: pcr_times): void {
     changeblock=1;
 
     //////TEXT START DENATURATION
-    String("START",20,2,1); //meter un espacio antes de la "S"
-    String("DENATURATION",20,4,1); //meter un espacio antes de la "S"
+    String("START",40,3,1); //meter un espacio antes de la "S"
+    String("DENATURATION",20,5,1); //meter un espacio antes de la "S"
     pause(1000); //give time for OLED to initialize
     clear(); //borro todo por si acaso
     
@@ -348,9 +348,9 @@ export function annealing(value: anneal, time: pcr_times): void {
     timeselection(time);
        
     //////TEXT START PCR
-    String(" STOP DENATURE",40,2,1); //meter un espacio antes de la "S"
-    String(" Cooling to ",10,4,1);
-    String(" annealing temperature",10,6,1);
+    String(" STOP DENATURE",20,2,1); //meter un espacio antes de la "S"
+    String(" Cooling to ",30,4,1);
+    String(" annealing ",40,6,1);
     pause(1000); //give time for OLED to initialize
     clear(); //borro todo por si acaso
 
@@ -365,8 +365,8 @@ export function annealing(value: anneal, time: pcr_times): void {
               changeblock=3;
               totalmillis=0;
               //////TEXT START PCR
-              String(" START",20,2,1); //meter un espacio antes de la "S"
-              String("  ANNEALING",20,4,1); //meter un espacio antes de la "S"
+              String(" START",40,3,1); //meter un espacio antes de la "S"
+              String("  ANNEALING",20,5,1); //meter un espacio antes de la "S"
               pause(1000); //give time for OLED to initialize
               clear(); //borro todo por si acaso
               pins.A0.digitalWrite(true);
@@ -376,8 +376,15 @@ export function annealing(value: anneal, time: pcr_times): void {
          }
          else{}
     }//cierro while change bloc
+    String(" CAMBIO",40,3,1);
+     pause(1000); //give time for OLED to initialize
+     clear(); //borro todo por si acaso
 
     while (changeblock==3){
+     String(" WHILE 3",40,3,1);
+     pause(1000); //give time for OLED to initialize
+              clear(); //borro todo por si acaso
+     
            start=control.millis();
            let tempCelsius=leertemp();
 
@@ -385,6 +392,9 @@ export function annealing(value: anneal, time: pcr_times): void {
                case anneal.sixtyeight: 
                    if (totalmillis<=thetime){ 
                        if (tempCelsius<=68){ 
+                             String(" DENTRO 68",40,3,1);
+     pause(1000); //give time for OLED to initialize
+              clear(); //borro todo por si acaso
                            pins.A0.digitalWrite(false) ;//calentar
                            if (tempCelsius<67 && tempCelsius>=66) {
                            pause(3000); 
@@ -547,32 +557,4 @@ export function elongation(value: elongate, time: pcr_times): void {
     } //cierro while
 } //close elongation block
  
- //% block="machine during %time" blockGap=8
-//% weight=70 color=#AA278D
-export function machinelearning(time: pcr_times): void {
-    
-      timeselection(time);
-      totalmillis=0;
-
-       pins.A2.digitalWrite(false);
-       pins.A3.digitalWrite(false);
-       pins.A4.digitalWrite(false);
-       while(totalmillis<=thetime){
-            start=control.millis();
-            //lectura temperatura + proyeccion en oled
-            let tempCelsius=leertemp();
-            themillis=control.millis()-start;
-            totalmillis=themillis+totalmillis;
-        }//close while 
-        pins.A2.digitalWrite(true);
-        pins.A3.digitalWrite(true);
-        pins.A4.digitalWrite(true);
-        String(" APAGANDO ",40,2,1); //meter un espacio antes de la "S"
-        String(" VENTILADORES",40,4,1); //meter un espacio antes de la "S"
-        pause(2000)
-        clear();
-        String(" STOP ",40,2,1); //meter un espacio antes de la "S"
-        String(" PRUEBA",40,4,1); //meter un espacio antes de la "S"
- 
-  }//close tempe block
 } //close namespace 
