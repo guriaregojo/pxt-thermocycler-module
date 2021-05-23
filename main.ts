@@ -266,11 +266,11 @@ export function Start_PCR(): void {
                 pins.A2.digitalWrite(true);
                 pins.A3.digitalWrite(true);
                 pins.A4.digitalWrite(true);
+                if(tempCelsius>=92.5){
+                   changeblock=1;
+                }
+                else{}
             }
-            if(tempCelsius>=91.5){
-               changeblock=1;
-            }
-            else{}
          }//cierro while
 } //cierro start_PCR
 
@@ -285,7 +285,7 @@ export function denaturation(value: denature, time: pcr_times): void {
     //////TEXT START DENATURATION
     String("START",50,3,1); //meter un espacio antes de la "S"
     String("DENATURATION",30,5,1); //meter un espacio antes de la "S"
-    pause(1000); //give time for OLED to initialize
+    pause(500); //give time for OLED to initialize
     clear(); //borro todo por si acaso
     
     while (changeblock==1){
@@ -294,27 +294,27 @@ export function denaturation(value: denature, time: pcr_times): void {
         switch(value) {
                case denature.ninetyfour: 
                     if (totalmillis<=thetime){ //denature initialize: x mins a x temperaturaº, esta calculado que 1 count= 2 segundos
-                        if (tempCelsius<=94){ 
+                        if (tempCelsius<94){ 
                             pins.A0.digitalWrite(false);
-                            if (tempCelsius>=93){
+                            if (tempCelsius>93 && tempCelsius<=94){
                             pause(1000);}
-                            if (tempCelsius>90 && tempCelsius<=92) {
+                            else if (tempCelsius>92 && tempCelsius<=93) {
                             pause(2000);}
-                            else if (tempCelsius<=90){
-                            pause(2500);}
+                            else if (tempCelsius>91 && tempCelsius<=92){
+                            pause(3000);}
                             else {
-                            pause(1500);
+                            pause(3500);
                             }
                             }
-                            else if (tempCelsius>=94.5){
+                          else if (tempCelsius>=94){
                                 pins.A2.digitalWrite(false);
                                 pins.A3.digitalWrite(false);
                                 pins.A4.digitalWrite(false);
-                                if (tempCelsius>=96){
-                                    pause(2000);
-                                }
-                                else if (tempCelsius>=95){
+                                if (tempCelsius>=95 && tempCelsius<96){
                                     pause(1000);
+                                }
+                                else if (tempCelsius>=96){
+                                    pause(3000);
                                 }
                                 else{
                                     pause(500);
@@ -361,18 +361,18 @@ export function annealing(value: anneal, time: pcr_times): void {
          pins.A3.digitalWrite(false);
          pins.A4.digitalWrite(false);
 
-         if(tempCelsius<=75){
+         if(tempCelsius<=70){
               changeblock=3;
               totalmillis=0;
-              //////TEXT START PCR
-              String("START",50,3,1); //meter un espacio antes de la "S"
-              String("ANNEALING",30,5,1); //meter un espacio antes de la "S"
-              pause(1000); //give time for OLED to initialize
-              clear(); //borro todo por si acaso
-              pins.A0.digitalWrite(true);
+              pins.A0.digitalWrite(false);
               pins.A2.digitalWrite(true);
               pins.A3.digitalWrite(true);
               pins.A4.digitalWrite(true);
+              //////TEXT START PCR
+              String("START",50,3,1); //meter un espacio antes de la "S"
+              String("ANNEALING",30,5,1); //meter un espacio antes de la "S"
+              pause(500); //give time for OLED to initialize
+              clear(); //borro todo por si acaso
          }
          else{}
     }//cierro while change bloc
@@ -388,24 +388,24 @@ export function annealing(value: anneal, time: pcr_times): void {
                    if (totalmillis<=thetime){ 
                        if (tempCelsius<=68){ 
                            pins.A0.digitalWrite(false) ;//calentar
-                           if (tempCelsius<67 && tempCelsius>=66) {
-                           pause(3000); 
+                           if (tempCelsius<68 && tempCelsius>=67) {
+                           pause(2000); 
                            }
-                           else if (tempCelsius<=65){
-                           pause(3000);}
+                           else if (tempCelsius<67 && tempCelsius>=66){
+                           pause(1000);}
                            else {
-                           pause(1000);
+                           pause(500);
                            }
                        }
-                       else if (tempCelsius>=69.5){
+                       else if (tempCelsius>=73){
                            pins.A2.digitalWrite(false);
                            pins.A3.digitalWrite(false);
                            pins.A4.digitalWrite(false);
-                           if (tempCelsius>=70){
-                           pause(2000);
+                           if (tempCelsius>=72){
+                           pause(4000);
                            }
                            else {
-                           pause(800); 
+                           pause(1000); 
                            }
                        } 
                        else{}
@@ -420,7 +420,7 @@ export function annealing(value: anneal, time: pcr_times): void {
                         String("STOP ANNEALING",20,2,1); //meter un espacio antes de la "S"
                         String("Heating to ",35,4,1);
                         String("elongation temp",30,6,1);
-                        pause(1000); //give time for OLED to initialize
+                        pause(2000); //give time for OLED to initialize
                         clear(); //borro todo por si acaso
                     }
                 break;
@@ -444,15 +444,21 @@ export function elongation(value: elongate, time: pcr_times): void {
          let tempCelsius=leertemp();
          if(tempCelsius<=70){
              pins.A0.digitalWrite(false); //calentar
+               pins.A2.digitalWrite(true);
+               pins.A3.digitalWrite(true);
+              pins.A4.digitalWrite(true);
          }
          else{
-             pins.A0.digitalWrite(true);
+             pins.A0.digitalWrite(true); //calentar
+               pins.A2.digitalWrite(true);
+               pins.A3.digitalWrite(true);
+              pins.A4.digitalWrite(true)
             
                  changeblock=5;
                  totalmillis=0;
                  String("START ",50,3,1); 
                  String("ELONGATION",30,5,1);
-                 pause(1000); //give time for OLED to initialize
+                 pause(2000); //give time for OLED to initialize
                  clear(); //borro todo por si acaso
           }//cierra else
      } //cierra while se supone
@@ -465,25 +471,31 @@ export function elongation(value: elongate, time: pcr_times): void {
                 if (totalmillis<=thetime){ 
                     if (tempCelsius<=72){ 
                         pins.A0.digitalWrite(false); //calentar
-                        if (tempCelsius<71 && tempCelsius>=70) {
-                        pause(1500); 
+                        if (tempCelsius<=72 && tempCelsius>71) {
+                        pause(1000); 
                         }
-                        else if (tempCelsius<=68){
+                        else if (tempCelsius<=71 && tempCelsius>70) {
+                        pause(2000); 
+                        }
+                        else if (tempCelsius<=70){
                         pause(3000);
                         }
                         else {
                        pause(1000);
                         }
                     }
-                    else if (tempCelsius>=72.8){
+                    else if (tempCelsius>72){
                         pins.A2.digitalWrite(false);
                         pins.A3.digitalWrite(false);
                         pins.A4.digitalWrite(false);
-                        if (tempCelsius>=74){
-                        pause(200);
+                        if (tempCelsius>=73.5){
+                        pause(3000);
+                        }
+                        else if (tempCelsius>=73){
+                        pause(2000);
                         }
                         else {
-                        pause(800); 
+                        pause(1000); 
                         }
                     } 
                     else{}
@@ -494,7 +506,7 @@ export function elongation(value: elongate, time: pcr_times): void {
 
                 }//cierro if count
                 else {
-                    if (fullcycle<=2){
+                    if (fullcycle<=index){ //2,30...
                          if (cartel==0){
                                 String(" STOP ",50,3,1); //meter un espacio antes de la "S"
                                 String(" ELONGATION",30,5,1); //meter un espacio antes de la "S"
@@ -513,7 +525,7 @@ export function elongation(value: elongate, time: pcr_times): void {
                                 cartel=1;
                           }
                           else {
-                                 if (tempCelsius<=83){   
+                                 if (tempCelsius<=85){   
                                     pins.A0.digitalWrite(false);
                                  }
                                  else{
@@ -524,12 +536,6 @@ export function elongation(value: elongate, time: pcr_times): void {
                                     if (tempCelsius>=91.5){
                                          changeblock=1; //back to denature a no ser que se hayan acabado los ciclos
                                          cartel=0;
-                                         fullcycle++;
-                                         //////TEXT NEW CYCLE
-                                         String(" END CYCLE",20,4,1); //meter un espacio antes de la "S"
-                                         Number(fullcycle,52,6,1);
-                                         pause(1000); //give time for OLED to initialize
-                                         clear(); //borro todo por si acaso
                                      }
                                      else{}
                                     } //cierro else 1
