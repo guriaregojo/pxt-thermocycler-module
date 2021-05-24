@@ -506,7 +506,7 @@ export function elongation(value: elongate, time: pcr_times): void {
 
                 }//cierro if count
                 else {
-                    if (fullcycle<=index){ //2,30...
+                    if (fullcycle<2){ //2,30...
                          if (cartel==0){
                                 String(" STOP ",50,3,1); //meter un espacio antes de la "S"
                                 String(" ELONGATION",30,5,1); //meter un espacio antes de la "S"
