@@ -243,7 +243,7 @@ function leertemp():number{
     }
 }//close f(x) timeselection
 
-//% block="jeje the PCR" blockGap=8
+//% block="Real the PCR" blockGap=8
 //% weight=100 color=#FFA533
 export function Start_PCR(): void {
  
@@ -257,7 +257,7 @@ export function Start_PCR(): void {
         // calentar a denature temperature
         while (changeblock==0){
             let tempCelsius=leertemp();
-            if(tempCelsius<=85){ 
+            if(tempCelsius<=86){ 
                 //calentar hasta detectar 55º con intencion de que llegue a 94º
                 pins.A0.digitalWrite(false); //calentar
             }
