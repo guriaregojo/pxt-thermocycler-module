@@ -243,7 +243,7 @@ function leertemp():number{
     }
 }//close f(x) timeselection
 
-//% block="Real the PCR" blockGap=8
+//% block="Start PCR" blockGap=8
 //% weight=100 color=#FFA533
 export function Start_PCR(): void {
  
