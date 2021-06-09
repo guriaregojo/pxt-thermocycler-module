@@ -56,7 +56,18 @@ enum elongate {
 //% weight=100 color=#AA278D icon="\uf0c3"
 namespace PCR { //mi icono de PCR en el desplegable
 
- 
+  function timeselection(usertime:pcr_times):void{
+    switch(usertime) { 
+        case pcr_times.fifteenseconds: thetime=15000;break; //fifteenseconds=15000ms
+        case pcr_times.twentyseconds: thetime=20000;break;
+        case pcr_times.thirtyseconds: thetime=30000;break;
+        case pcr_times.fortyseconds: thetime=40000;break;
+        case pcr_times.oneminute: thetime=60000;break;
+        case pcr_times.twominutes: thetime=2*60000;break;
+        case pcr_times.threeminutes: thetime=3*60000;break;
+        case pcr_times.tenminutes: thetime=10*60000;break;
+    }
+}//close f(x) timeselection
 
 
 //% block="Start PCR" blockGap=8
