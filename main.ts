@@ -55,7 +55,7 @@ enum elongate {
 
 //% weight=100 color=#AA278D icon="\uf0c3"
 namespace PCR { //mi icono de PCR en el desplegable
-
+ let thetime: number=0; 
   function timeselection(usertime:pcr_times):void{
     switch(usertime) { 
         case pcr_times.fifteenseconds: thetime=15000;break; //fifteenseconds=15000ms
